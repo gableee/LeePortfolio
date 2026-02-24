@@ -4,6 +4,7 @@ import Layout from './components/layout/Layout';
 import Hero from './components/sections/Hero';
 
 const About = lazy(() => import('./components/sections/About'));
+const FrontendFocus = lazy(() => import('./components/sections/FrontendFocus'));
 const Skills = lazy(() => import('./components/sections/Skills'));
 const Projects = lazy(() => import('./components/sections/Projects'));
 const Experience = lazy(() => import('./components/sections/Experience'));
@@ -25,6 +26,9 @@ function HomePage() {
       <Hero />
       <Suspense fallback={<SectionFallback />}>
         <About />
+      </Suspense>
+      <Suspense fallback={<SectionFallback />}>
+        <FrontendFocus />
       </Suspense>
       <Suspense fallback={<SectionFallback />}>
         <Skills />

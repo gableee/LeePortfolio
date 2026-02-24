@@ -17,6 +17,12 @@
     -moz-osx-font-smoothing: grayscale;
   }
 
+  a:focus-visible,
+  button:focus-visible,
+  [role='button']:focus-visible {
+    @apply outline-none ring-2 ring-accent ring-offset-2 ring-offset-slate-50 dark:ring-accent-light dark:ring-offset-navy-800;
+  }
+
   ::selection {
     @apply bg-accent/30 text-accent-dark dark:text-accent-light;
   }
@@ -40,11 +46,11 @@
 
 @layer components {
   .section-heading {
-    @apply text-heading text-slate-900 dark:text-slate-light mb-2;
+    @apply text-2xl font-bold text-slate-900 dark:text-slate-light mb-1.5 sm:text-3xl sm:mb-2 md:text-heading;
   }
 
   .section-subheading {
-    @apply text-subheading text-slate-600 dark:text-slate mb-10;
+    @apply text-sm text-slate-600 dark:text-slate mb-6 max-w-3xl leading-relaxed sm:text-base sm:mb-8 md:text-subheading md:mb-10;
   }
 
   .text-gradient {
@@ -56,7 +62,7 @@
   }
 
   .card-hover {
-    @apply transition-all duration-300 hover:-translate-y-1 hover:shadow-lg hover:shadow-accent/5;
+    @apply transition-all duration-300 hover:-translate-y-1 hover:shadow-lg hover:shadow-accent/10 dark:hover:shadow-accent-light/5;
   }
 
   /* Theme transition on interactive elements only */
@@ -93,6 +99,21 @@
   }
   .scrollbar-hide::-webkit-scrollbar {
     display: none;
+  }
+}
+
+@media (prefers-reduced-motion: reduce) {
+  html {
+    scroll-behavior: auto;
+  }
+
+  *,
+  *::before,
+  *::after {
+    animation-duration: 1ms !important;
+    animation-iteration-count: 1 !important;
+    transition-duration: 1ms !important;
+    scroll-behavior: auto !important;
   }
 }
 

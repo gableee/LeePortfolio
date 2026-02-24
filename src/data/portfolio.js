@@ -6,6 +6,7 @@ export const personalInfo = {
     'A detail-oriented Frontend Engineer with a passion for crafting performant, accessible, and visually refined web applications. I specialize in turning complex problems into elegant, user-centric interfaces.',
   email: 'your.email@example.com',
   location: 'Your City, Country',
+  photo: '/profile-photo.jpg',
   social: {
     github: 'https://github.com/yourusername',
     linkedin: 'https://linkedin.com/in/yourusername',
@@ -23,6 +24,52 @@ export const aboutData = {
     { label: 'Years Experience', value: '5+' },
     { label: 'Projects Delivered', value: '20+' },
     { label: 'Technologies', value: '15+' },
+  ],
+};
+
+export const frontendFocusData = {
+  pillars: [
+    {
+      title: 'UI Craft & Accessibility',
+      whyItMatters:
+        'Teams want engineers who can build polished interfaces that are inclusive and production-ready, not just visually nice.',
+      sampleProof: 'Built keyboard-first navigation and WCAG 2.1 AA color-contrast tokens for a dashboard redesign.',
+      status: 'Replace with your real case',
+    },
+    {
+      title: 'Performance & Core Web Vitals',
+      whyItMatters:
+        'Frontend work is measured by user experience outcomes, including speed, responsiveness, and stability.',
+      sampleProof: 'Reduced Largest Contentful Paint from 3.8s to 1.9s via route-based code splitting and image optimization.',
+      status: 'Replace with your real metric',
+    },
+    {
+      title: 'Component Architecture',
+      whyItMatters:
+        'Companies value maintainable systems that let teams ship features faster with fewer regressions.',
+      sampleProof: 'Created reusable component primitives and docs that reduced duplicate UI code by ~30%.',
+      status: 'Replace with your real impact',
+    },
+  ],
+  sectionsToAddLater: [
+    {
+      name: 'Frontend Case Study Deep-Dive',
+      purpose: 'Show one project in depth: problem, constraints, architecture decisions, tradeoffs, and measurable impact.',
+      sample:
+        'Example structure: Context → Tech Choices → Performance Fixes → Accessibility Improvements → Final Metrics.',
+    },
+    {
+      name: 'Quality & Reliability',
+      purpose: 'Prove how you prevent breakage and collaborate in real teams.',
+      sample:
+        'Include test strategy (unit/integration), CI checks, lint rules, and a short bug-prevention story.',
+    },
+    {
+      name: 'Product Impact Snapshot',
+      purpose: 'Translate frontend work into business/user outcomes that non-engineers can understand quickly.',
+      sample:
+        'Use 3 concise metrics: conversion uplift, load-time reduction, and support-ticket reduction.',
+    },
   ],
 };
 
@@ -361,6 +408,7 @@ export const hackathonsData = [
 
 export const navLinks = [
   { label: 'About', href: '#about' },
+  { label: 'Frontend', href: '#frontend' },
   { label: 'Skills', href: '#skills' },
   { label: 'Projects', href: '#projects' },
   { label: 'Experience', href: '#experience' },

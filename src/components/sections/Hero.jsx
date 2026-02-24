@@ -1,7 +1,10 @@
+import { useEffect, useMemo, useState } from 'react';
 import { personalInfo } from '../../data/portfolio';
 import { useInView } from '../../hooks/useInView';
 import Button from '../ui/Button';
+import { AvatarPlaceholder } from '../ui/Placeholder';
 import { ArrowRightIcon, GitHubIcon, LinkedInIcon } from '../icons';
+import { useTextScramble, MagneticWrapper, TiltCard } from '../effects';
 
 function Reveal({ children, delay = 0, isInView, direction = 'up' }) {
   const transforms = {
@@ -26,6 +29,29 @@ function Reveal({ children, delay = 0, isInView, direction = 'up' }) {
 
 export default function Hero() {
   const [ref, isInView] = useInView({ threshold: 0.05, rootMargin: '0px' });
+  const [prefersReducedMotion, setPrefersReducedMotion] = useState(false);
+  const [hasPhotoError, setHasPhotoError] = useState(false);
+
+  const initials = useMemo(() => {
+    const parts = personalInfo.name.trim().split(/\s+/).slice(0, 2);
+    return parts.map((part) => part[0]?.toUpperCase() || '').join('') || 'YN';
+  }, []);
+
+  useEffect(() => {
+    const mediaQuery = window.matchMedia('(prefers-reduced-motion: reduce)');
+    const syncPreference = () => setPrefersReducedMotion(mediaQuery.matches);
+    syncPreference();
+    mediaQuery.addEventListener('change', syncPreference);
+    return () => mediaQuery.removeEventListener('change', syncPreference);
+  }, []);
+
+  const visible = prefersReducedMotion ? true : isInView;
+
+  // Text scramble for name
+  const { displayText: scrambledName } = useTextScramble(
+    personalInfo.name,
+    { duration: 1200, delay: visible ? 300 : 99999, revealDirection: 'start' }
+  );
 
   return (
     <section
@@ -33,77 +59,140 @@ export default function Hero() {
       className="relative flex min-h-screen items-center pt-20"
       aria-label="Introduction"
     >
-      {/* Subtle background gradient */}
+      {/* Creative background with floating elements */}
       <div className="pointer-events-none absolute inset-0 overflow-hidden">
+        {/* Base gradient */}
         <div className="absolute -top-1/2 right-0 h-[800px] w-[800px] rounded-full bg-accent/5 blur-3xl dark:bg-accent/[0.07]" />
-        <div className="absolute -bottom-1/4 left-0 h-[600px] w-[600px] rounded-full bg-accent/3 blur-3xl dark:bg-accent/[0.04]" />
+        <div className="absolute -bottom-1/4 left-0 h-[600px] w-[600px] rounded-full bg-violet-500/5 blur-3xl dark:bg-violet-500/[0.05]" />
+        
+        {/* Floating geometric shapes */}
+        <div className="absolute left-[10%] top-[20%] h-16 w-16 animate-float rounded-xl border border-accent/20 bg-accent/5 backdrop-blur-sm dark:border-accent-light/20 dark:bg-accent-light/5" style={{ animationDelay: '0s' }} />
+        <div className="absolute right-[15%] top-[35%] h-12 w-12 animate-float rounded-full border border-violet-500/20 bg-violet-500/5 backdrop-blur-sm" style={{ animationDelay: '2s' }} />
+        <div className="absolute bottom-[25%] left-[5%] h-20 w-20 animate-float rotate-45 rounded-xl border border-accent/10 bg-accent/3 backdrop-blur-sm dark:border-accent-light/10" style={{ animationDelay: '4s' }} />
+        <div className="absolute bottom-[40%] right-[8%] h-8 w-8 animate-float rounded-lg border border-cyan-500/20 bg-cyan-500/5 backdrop-blur-sm" style={{ animationDelay: '1s' }} />
+        
+        {/* Dotted grid pattern */}
+        <div 
+          className="absolute inset-0 opacity-[0.02] dark:opacity-[0.04]"
+          style={{
+            backgroundImage: 'radial-gradient(circle, currentColor 1px, transparent 1px)',
+            backgroundSize: '40px 40px',
+          }}
+        />
+        
+        {/* Gradient line accent */}
+        <div className="absolute left-0 top-1/3 h-px w-1/3 bg-gradient-to-r from-transparent via-accent/30 to-transparent dark:via-accent-light/20" />
+        <div className="absolute bottom-1/4 right-0 h-px w-1/4 bg-gradient-to-l from-transparent via-violet-500/30 to-transparent" />
       </div>
 
       <div className="mx-auto w-full max-w-6xl px-4 sm:px-6 lg:px-8">
-        <div className="max-w-3xl">
-          {/* Greeting */}
-          <Reveal isInView={isInView} delay={0} direction="none">
-            <p className="mb-5 font-mono text-sm text-accent dark:text-accent-light md:text-base">
+        {/* Mobile-first: stack vertically, then side-by-side on lg */}
+        <div className="flex flex-col gap-8 sm:gap-10 lg:flex-row lg:items-center lg:gap-16">
+          {/* Content - full width on mobile */}
+          <div className="w-full lg:flex-1">
+            {/* Greeting - smaller on mobile */}
+            <Reveal isInView={visible} delay={0} direction="none">
+              <p className="mb-3 font-mono text-xs text-accent dark:text-accent-light sm:mb-4 sm:text-sm">
+                {personalInfo.title}
+              </p>
+            </Reveal>
+
+            <Reveal isInView={visible} delay={50} direction="none">
+              <p className="mb-4 font-mono text-xs text-accent dark:text-accent-light sm:mb-5 sm:text-sm">
               Hi, my name is
-            </p>
-          </Reveal>
+              </p>
+            </Reveal>
 
-          {/* Name */}
-          <Reveal isInView={isInView} delay={100}>
-            <h1 className="text-display-sm font-bold text-slate-900 dark:text-slate-light sm:text-display">
-              {personalInfo.name}
-              <span className="text-gradient">.</span>
-            </h1>
-          </Reveal>
+            {/* Name with scramble effect - responsive sizing */}
+            <Reveal isInView={visible} delay={100}>
+              <h1 className="text-3xl font-bold text-slate-900 dark:text-slate-light sm:text-4xl md:text-5xl lg:text-display">
+                <span className="font-mono">{visible ? scrambledName : personalInfo.name}</span>
+                <span className="text-gradient">.</span>
+              </h1>
+            </Reveal>
 
-          {/* Tagline */}
-          <Reveal isInView={isInView} delay={200}>
-            <h2 className="mt-2 text-display-sm text-slate-500 dark:text-slate sm:text-[3.5rem] sm:leading-tight">
-              {personalInfo.tagline}
-            </h2>
-          </Reveal>
+            {/* Tagline - responsive sizing */}
+            <Reveal isInView={visible} delay={200}>
+              <h2 className="mt-2 text-xl text-slate-500 dark:text-slate sm:text-2xl md:text-3xl lg:text-4xl lg:leading-tight">
+                {personalInfo.tagline}
+              </h2>
+            </Reveal>
 
-          {/* Description */}
-          <Reveal isInView={isInView} delay={300}>
-            <p className="mt-6 max-w-xl text-base leading-relaxed text-slate-600 dark:text-slate md:text-lg">
-              {personalInfo.description}
-            </p>
-          </Reveal>
+            {/* Description - better mobile readability */}
+            <Reveal isInView={visible} delay={300}>
+              <p className="mt-4 text-sm leading-relaxed text-slate-600 dark:text-slate sm:mt-6 sm:text-base md:text-lg">
+                {personalInfo.description}
+              </p>
+            </Reveal>
 
-          {/* CTAs */}
-          <Reveal isInView={isInView} delay={400}>
-            <div className="mt-10 flex flex-wrap items-center gap-4">
-              <Button href="#projects" size="lg">
-                View My Work
-                <ArrowRightIcon />
-              </Button>
-              <Button href="#contact" variant="outline" size="lg">
-                Get In Touch
-              </Button>
-            </div>
-          </Reveal>
+            {/* CTAs with magnetic effect - full width buttons on mobile */}
+            <Reveal isInView={visible} delay={400}>
+              <div className="mt-6 flex flex-col gap-3 sm:mt-8 sm:flex-row sm:flex-wrap sm:items-center sm:gap-4">
+                <MagneticWrapper strength={0.2} className="w-full sm:w-auto">
+                  <Button href="#projects" size="lg" className="w-full rounded-full sm:w-auto">
+                    View Case Studies
+                    <ArrowRightIcon />
+                  </Button>
+                </MagneticWrapper>
+                <MagneticWrapper strength={0.2} className="w-full sm:w-auto">
+                  <Button href="#contact" variant="outline" size="lg" className="w-full rounded-full sm:w-auto">
+                    Contact Me
+                  </Button>
+                </MagneticWrapper>
+              </div>
+            </Reveal>
 
-          {/* Social links */}
-          <Reveal isInView={isInView} delay={500} direction="none">
-            <div className="mt-12 flex items-center gap-5">
-              <a
-                href={personalInfo.social.github}
-                target="_blank"
-                rel="noopener noreferrer"
-                className="text-slate-500 transition-colors hover:text-accent dark:text-slate-dark dark:hover:text-accent-light"
-                aria-label="GitHub Profile"
-              >
-                <GitHubIcon className="h-6 w-6" />
-              </a>
-              <a
-                href={personalInfo.social.linkedin}
-                target="_blank"
-                rel="noopener noreferrer"
-                className="text-slate-500 transition-colors hover:text-accent dark:text-slate-dark dark:hover:text-accent-light"
-                aria-label="LinkedIn Profile"
-              >
-                <LinkedInIcon className="h-6 w-6" />
-              </a>
+            {/* Social links - larger touch targets on mobile */}
+            <Reveal isInView={visible} delay={500} direction="none">
+              <div className="mt-8 flex items-center gap-3 sm:mt-10 sm:gap-5">
+                <a
+                  href={personalInfo.social.github}
+                  target="_blank"
+                  rel="noopener noreferrer"
+                  className="flex h-11 w-11 items-center justify-center rounded-full text-slate-500 transition-colors hover:bg-accent/10 hover:text-accent active:bg-accent/20 dark:text-slate-dark dark:hover:text-accent-light sm:h-10 sm:w-10"
+                  aria-label="GitHub Profile"
+                >
+                  <GitHubIcon className="h-5 w-5 sm:h-6 sm:w-6" />
+                </a>
+                <a
+                  href={personalInfo.social.linkedin}
+                  target="_blank"
+                  rel="noopener noreferrer"
+                  className="flex h-11 w-11 items-center justify-center rounded-full text-slate-500 transition-colors hover:bg-accent/10 hover:text-accent active:bg-accent/20 dark:text-slate-dark dark:hover:text-accent-light sm:h-10 sm:w-10"
+                  aria-label="LinkedIn Profile"
+                >
+                  <LinkedInIcon className="h-5 w-5 sm:h-6 sm:w-6" />
+                </a>
+              </div>
+            </Reveal>
+          </div>
+
+          {/* Profile visual - hidden on very small screens, shown from sm up */}
+          <Reveal isInView={visible} delay={250} direction="right">
+            <div className="mx-auto w-full max-w-xs sm:max-w-sm lg:w-80 lg:flex-shrink-0">
+              <TiltCard tiltAmount={8} className="relative overflow-hidden rounded-2xl border border-gray-200/70 bg-white p-4 shadow-xl shadow-slate-300/20 dark:border-navy-600/70 dark:bg-navy-700 dark:shadow-navy-900/40 sm:rounded-3xl sm:p-6">
+                <div className="absolute -right-12 -top-12 h-28 w-28 rounded-full bg-accent/10 blur-2xl dark:bg-accent-light/10 sm:-right-16 sm:-top-16 sm:h-40 sm:w-40" />
+
+                {/* Profile image with proper placeholder */}
+                <div className="relative mx-auto h-32 w-32 overflow-hidden rounded-full sm:h-44 sm:w-44">
+                  {personalInfo.photo && !hasPhotoError ? (
+                    <img
+                      src={personalInfo.photo}
+                      alt={`${personalInfo.name} profile`}
+                      className="h-full w-full object-cover"
+                      loading="eager"
+                      onError={() => setHasPhotoError(true)}
+                    />
+                  ) : (
+                    <AvatarPlaceholder name={personalInfo.name} size="2xl" className="h-full w-full" />
+                  )}
+                </div>
+
+                <div className="mt-4 text-center sm:mt-6">
+                  <p className="text-xs font-medium text-slate-500 dark:text-slate-dark sm:text-sm">Based in {personalInfo.location}</p>
+                  <p className="mt-1 text-xs text-slate-600 dark:text-slate sm:text-sm">Open to frontend opportunities and impactful collaborations.</p>
+                </div>
+              </TiltCard>
             </div>
           </Reveal>
         </div>

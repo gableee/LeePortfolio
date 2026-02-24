@@ -8,17 +8,18 @@ export default {
   theme: {
     extend: {
       colors: {
+        // Refined black palette - sophisticated near-blacks
         navy: {
-          900: '#020c1b',
-          800: '#0a192f',
-          700: '#112240',
-          600: '#1d3461',
-          500: '#233554',
+          900: '#000000',   // Pure black for deepest elements
+          800: '#0a0a0a',   // Main dark background
+          700: '#141414',   // Card backgrounds
+          600: '#1f1f1f',   // Borders and dividers
+          500: '#2a2a2a',   // Lighter accents
         },
         slate: {
-          light: '#ccd6f6',
-          DEFAULT: '#8892b0',
-          dark: '#495670',
+          light: '#e4e4e7',  // Brighter for better contrast on black
+          DEFAULT: '#a1a1aa',
+          dark: '#52525b',
         },
         accent: {
           DEFAULT: '#06b6d4',
@@ -42,6 +43,10 @@ export default {
         'slide-up': 'slideUp 0.6s ease-out forwards',
         'slide-in-left': 'slideInLeft 0.6s ease-out forwards',
         'slide-in-right': 'slideInRight 0.6s ease-out forwards',
+        'float': 'float 6s ease-in-out infinite',
+        'pulse-slow': 'pulse 4s cubic-bezier(0.4, 0, 0.6, 1) infinite',
+        'gradient-x': 'gradientX 15s ease infinite',
+        'shimmer': 'shimmer 2s linear infinite',
       },
       keyframes: {
         fadeIn: {
@@ -59,6 +64,18 @@ export default {
         slideInRight: {
           '0%': { opacity: '0', transform: 'translateX(30px)' },
           '100%': { opacity: '1', transform: 'translateX(0)' },
+        },
+        float: {
+          '0%, 100%': { transform: 'translateY(0)' },
+          '50%': { transform: 'translateY(-20px)' },
+        },
+        gradientX: {
+          '0%, 100%': { backgroundPosition: '0% 50%' },
+          '50%': { backgroundPosition: '100% 50%' },
+        },
+        shimmer: {
+          '0%': { backgroundPosition: '-200% 0' },
+          '100%': { backgroundPosition: '200% 0' },
         },
       },
     },
