@@ -1,9 +1,9 @@
 export const personalInfo = {
   name: 'Your Name',
-  title: 'Frontend Engineer',
-  tagline: 'I build exceptional digital experiences.',
+  title: 'Aspiring AI Engineer | 3rd Year Student',
+  tagline: 'Building practical AI projects with strong product and frontend fundamentals.',
   description:
-    'A detail-oriented Frontend Engineer with a passion for crafting performant, accessible, and visually refined web applications. I specialize in turning complex problems into elegant, user-centric interfaces.',
+    'I am a 3rd-year student aspiring to become an AI Engineer, focused on building practical, reliable, and user-centered intelligent products. I combine machine learning curiosity with strong frontend engineering to deliver end-to-end solutions people can actually use. I am actively preparing for internship opportunities next year.',
   email: 'your.email@example.com',
   location: 'Your City, Country',
   photo: '/profile-photo.jpg',
@@ -16,47 +16,47 @@ export const personalInfo = {
 
 export const aboutData = {
   summary: [
-    "I'm a Frontend Engineer who thrives at the intersection of design and engineering. I care deeply about the craft\u2014from pixel-perfect layouts to performant rendering pipelines.",
-    "Over the past several years, I've worked across startups and mid-size companies building products used by thousands. My approach combines strong technical fundamentals with product thinking and a relentless focus on user experience.",
-    "When I'm not coding, you'll find me exploring new design systems, contributing to open source, or diving into the latest web platform APIs.",
+    "I'm a 3rd-year student and aspiring AI Engineer who enjoys turning complex problems into practical systems. I use frontend engineering as a strength to make AI experiences clear, usable, and trustworthy.",
+    "Right now, my focus is strengthening ML fundamentals, building portfolio-ready AI projects, and improving the engineering practices needed to ship reliable products.",
+    "When I'm not coding, you'll find me studying machine learning, joining hackathons, experimenting with new ideas, and preparing for internship opportunities.",
   ],
   highlights: [
-    { label: 'Years Experience', value: '5+' },
-    { label: 'Projects Delivered', value: '20+' },
-    { label: 'Technologies', value: '15+' },
+    { label: 'Year Level', value: '3rd Year' },
+    { label: 'Projects Built', value: '10+' },
+    { label: 'Focus Area', value: 'AI + Product' },
   ],
 };
 
 export const frontendFocusData = {
   pillars: [
     {
-      title: 'UI Craft & Accessibility',
+      title: 'AI Product UX & Accessibility',
       whyItMatters:
-        'Teams want engineers who can build polished interfaces that are inclusive and production-ready, not just visually nice.',
+        'Great AI products are only valuable when users can understand, trust, and act on model outputs.',
       sampleProof: 'Built keyboard-first navigation and WCAG 2.1 AA color-contrast tokens for a dashboard redesign.',
       status: 'Replace with your real case',
     },
     {
-      title: 'Performance & Core Web Vitals',
+      title: 'ML Foundations & Iteration',
       whyItMatters:
-        'Frontend work is measured by user experience outcomes, including speed, responsiveness, and stability.',
-      sampleProof: 'Reduced Largest Contentful Paint from 3.8s to 1.9s via route-based code splitting and image optimization.',
+        'AI teams value engineers who can move from problem framing to experiments, evaluation, and improvement loops.',
+      sampleProof: 'Defined baseline metrics, compared model variants, and documented tradeoffs to guide the next iteration.',
       status: 'Replace with your real metric',
     },
     {
-      title: 'Component Architecture',
+      title: 'Engineering for Production',
       whyItMatters:
-        'Companies value maintainable systems that let teams ship features faster with fewer regressions.',
-      sampleProof: 'Created reusable component primitives and docs that reduced duplicate UI code by ~30%.',
+        'Companies need AI engineers who can ship maintainable systems—not just notebooks—with reliability and observability in mind.',
+      sampleProof: 'Built reusable app primitives and validation checks that reduced regressions and sped up feature delivery.',
       status: 'Replace with your real impact',
     },
   ],
   sectionsToAddLater: [
     {
-      name: 'Frontend Case Study Deep-Dive',
-      purpose: 'Show one project in depth: problem, constraints, architecture decisions, tradeoffs, and measurable impact.',
+      name: 'AI Case Study Deep-Dive',
+      purpose: 'Show one AI project in depth: problem framing, dataset/constraints, modeling choices, tradeoffs, and measurable impact.',
       sample:
-        'Example structure: Context → Tech Choices → Performance Fixes → Accessibility Improvements → Final Metrics.',
+        'Example structure: Context → Data & Baseline → Model Experiments → Evaluation → Deployment/UX → Final Metrics.',
     },
     {
       name: 'Quality & Reliability',
@@ -66,9 +66,9 @@ export const frontendFocusData = {
     },
     {
       name: 'Product Impact Snapshot',
-      purpose: 'Translate frontend work into business/user outcomes that non-engineers can understand quickly.',
+      purpose: 'Translate AI + engineering work into business/user outcomes that non-engineers can understand quickly.',
       sample:
-        'Use 3 concise metrics: conversion uplift, load-time reduction, and support-ticket reduction.',
+        'Use 3 concise metrics: model quality uplift, latency/cost reduction, and user/task success improvement.',
     },
   ],
 };
@@ -182,41 +182,41 @@ export const projectsData = [
 
 export const experienceData = [
   {
-    role: 'Senior Frontend Engineer',
-    company: 'Company Name',
-    period: '2022 \u2014 Present',
+    role: 'Student Developer (AI + Web)',
+    company: 'Academic & Personal Projects',
+    period: '2024 \u2014 Present',
     description:
-      'Leading frontend architecture for the core product platform. Driving technical decisions on performance, accessibility, and developer experience.',
+      'Building AI-focused and web-based projects while strengthening software engineering fundamentals, product thinking, and collaboration skills.',
     achievements: [
-      'Architected a micro-frontend system serving 50K+ daily users',
-      'Reduced bundle size by 40% through code splitting and tree shaking',
-      'Mentored 3 junior engineers and established code review standards',
-      'Introduced automated visual regression testing into CI/CD pipeline',
+      'Built portfolio projects combining ML concepts with modern web interfaces',
+      'Improved performance and accessibility across personal and school projects',
+      'Practiced Git-based collaboration and code review in team projects',
+      'Documented project decisions, tradeoffs, and measurable outcomes for case studies',
     ],
   },
   {
-    role: 'Frontend Engineer',
-    company: 'Previous Company',
-    period: '2020 \u2014 2022',
+    role: 'Project Team Member',
+    company: 'University Coursework',
+    period: '2023 \u2014 2024',
     description:
-      'Built and maintained customer-facing React applications for a B2B SaaS platform. Collaborated closely with design and product teams.',
+      'Collaborated on course projects focused on software development, data processing, and UI implementation.',
     achievements: [
-      'Delivered 5 major feature launches on schedule',
-      'Improved Core Web Vitals across all product pages',
-      'Built reusable component library used by 3 product teams',
-      'Reduced production bugs by 60% through comprehensive testing',
+      'Delivered team milestones on time with clear task ownership',
+      'Applied testing and debugging workflows to improve project quality',
+      'Built reusable frontend components for faster implementation',
+      'Presented technical solutions and project demos to peers and mentors',
     ],
   },
   {
-    role: 'Junior Frontend Developer',
-    company: 'First Company',
-    period: '2019 \u2014 2020',
+    role: 'Early Developer Journey',
+    company: 'Self-Directed Learning',
+    period: '2022 \u2014 2023',
     description:
-      'Gained foundational experience in modern web development, working on responsive landing pages and internal tools.',
+      'Built strong foundations in programming, web development, and problem-solving through consistent hands-on practice.',
     achievements: [
-      'Converted legacy jQuery codebase to React',
-      'Implemented responsive designs achieving 99% cross-browser consistency',
-      'Automated repetitive tasks saving 10+ hours/week for the team',
+      'Completed multiple guided and independent coding projects',
+      'Learned modern JavaScript, React, and core software engineering concepts',
+      'Developed disciplined habits for documentation, iteration, and continuous learning',
     ],
   },
 ];
@@ -408,7 +408,7 @@ export const hackathonsData = [
 
 export const navLinks = [
   { label: 'About', href: '#about' },
-  { label: 'Frontend', href: '#frontend' },
+  { label: 'AI Focus', href: '#frontend' },
   { label: 'Skills', href: '#skills' },
   { label: 'Projects', href: '#projects' },
   { label: 'Experience', href: '#experience' },

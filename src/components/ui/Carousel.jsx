@@ -122,12 +122,12 @@ export default function Carousel({
         </div>
       </div>
 
-      {/* Navigation Arrows */}
+      {/* Navigation Arrows - responsive positioning and sizing */}
       <button
         onClick={goToPrev}
         className={cn(
-          'absolute left-4 sm:left-8 lg:left-16 top-1/2 z-40 -translate-y-1/2',
-          'flex h-12 w-12 sm:h-14 sm:w-14 items-center justify-center rounded-full',
+          'absolute left-2 sm:left-4 md:left-8 lg:left-16 top-1/2 z-40 -translate-y-1/2',
+          'flex h-9 w-9 sm:h-12 sm:w-12 md:h-14 md:w-14 items-center justify-center rounded-full',
           'bg-white/90 dark:bg-navy-700/90 shadow-2xl backdrop-blur-md',
           'border border-gray-200/80 dark:border-navy-500/80',
           'text-slate-700 dark:text-slate-light',
@@ -137,13 +137,13 @@ export default function Carousel({
         )}
         aria-label="Previous project"
       >
-        <ChevronLeftIcon className="h-6 w-6" />
+        <ChevronLeftIcon className="h-4 w-4 sm:h-5 sm:w-5 md:h-6 md:w-6" />
       </button>
       <button
         onClick={goToNext}
         className={cn(
-          'absolute right-4 sm:right-8 lg:right-16 top-1/2 z-40 -translate-y-1/2',
-          'flex h-12 w-12 sm:h-14 sm:w-14 items-center justify-center rounded-full',
+          'absolute right-2 sm:right-4 md:right-8 lg:right-16 top-1/2 z-40 -translate-y-1/2',
+          'flex h-9 w-9 sm:h-12 sm:w-12 md:h-14 md:w-14 items-center justify-center rounded-full',
           'bg-white/90 dark:bg-navy-700/90 shadow-2xl backdrop-blur-md',
           'border border-gray-200/80 dark:border-navy-500/80',
           'text-slate-700 dark:text-slate-light',
@@ -153,7 +153,7 @@ export default function Carousel({
         )}
         aria-label="Next project"
       >
-        <ChevronRightIcon className="h-6 w-6" />
+        <ChevronRightIcon className="h-4 w-4 sm:h-5 sm:w-5 md:h-6 md:w-6" />
       </button>
 
       {/* Dots Navigation */}

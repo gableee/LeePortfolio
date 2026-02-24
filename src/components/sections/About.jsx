@@ -35,11 +35,11 @@ export default function About() {
       title="About Me"
       subtitle="A quick overview of who I am and what drives me."
     >
-      {/* Bento Grid Layout - Mobile-first: stack on small, grid on md+ */}
-      <div className="grid gap-3 sm:gap-4 sm:grid-cols-2 lg:grid-cols-12 lg:auto-rows-[180px]">
+      {/* Bento Grid Layout - Mobile-first with min-height to prevent collapse */}
+      <div className="grid gap-3 sm:gap-4 sm:grid-cols-2 lg:grid-cols-12 lg:auto-rows-[minmax(180px,auto)]">
         {/* Main intro - Large card */}
         <TiltCard 
-          tiltAmount={5}
+          tiltAmount={2}
           className="overflow-hidden rounded-xl border border-gray-200/60 bg-white p-4 dark:border-navy-600/60 dark:bg-navy-700 sm:col-span-2 sm:rounded-2xl sm:p-6 lg:col-span-7 lg:row-span-2"
         >
           <div className="flex h-full flex-col justify-between">
@@ -66,7 +66,7 @@ export default function About() {
         {aboutData.highlights.map((item, index) => (
           <TiltCard
             key={item.label}
-            tiltAmount={8}
+            tiltAmount={3}
             className="group overflow-hidden rounded-xl border border-gray-200/60 bg-gradient-to-br from-white to-slate-50 p-3.5 dark:border-navy-600/60 dark:from-navy-700 dark:to-navy-800 sm:rounded-2xl sm:p-5 lg:col-span-5"
           >
             <div className="flex h-full flex-col justify-between gap-3 sm:gap-0">
@@ -96,7 +96,7 @@ export default function About() {
 
         {/* Skills preview - Wide card */}
         <TiltCard
-          tiltAmount={4}
+          tiltAmount={2}
           className="overflow-hidden rounded-xl border border-gray-200/60 bg-white p-3.5 dark:border-navy-600/60 dark:bg-navy-700 sm:col-span-2 sm:rounded-2xl sm:p-5 lg:col-span-7"
         >
           <div className="flex h-full flex-col">
@@ -132,7 +132,7 @@ export default function About() {
 
         {/* Interactive element - Accent card */}
         <TiltCard
-          tiltAmount={10}
+          tiltAmount={3}
           className="group overflow-hidden rounded-xl border border-accent/20 bg-gradient-to-br from-accent/5 via-violet-500/5 to-accent-light/5 p-3.5 dark:border-accent-light/20 sm:col-span-2 sm:rounded-2xl sm:p-5 lg:col-span-5"
         >
           <div className="flex h-full flex-col justify-between gap-3 sm:gap-0">
@@ -144,7 +144,7 @@ export default function About() {
             </div>
             <div>
               <p className="text-xs text-slate-600 dark:text-slate sm:text-sm">
-                Currently open to new frontend opportunities and exciting collaborations.
+                Currently open to AI engineering opportunities and exciting collaborations.
               </p>
               <a
                 href="#contact"

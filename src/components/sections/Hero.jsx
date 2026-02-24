@@ -8,9 +8,9 @@ import { useTextScramble, MagneticWrapper, TiltCard } from '../effects';
 
 function Reveal({ children, delay = 0, isInView, direction = 'up' }) {
   const transforms = {
-    up: 'translateY(2rem)',
-    left: 'translateX(-2rem)',
-    right: 'translateX(2rem)',
+    up: 'translateY(0.75rem)',
+    left: 'translateX(-0.75rem)',
+    right: 'translateX(0.75rem)',
     none: 'none',
   };
 
@@ -19,7 +19,7 @@ function Reveal({ children, delay = 0, isInView, direction = 'up' }) {
       style={{
         opacity: isInView ? 1 : 0,
         transform: isInView ? 'none' : transforms[direction],
-        transition: `opacity 0.7s ease-out ${delay}ms, transform 0.7s ease-out ${delay}ms`,
+        transition: `opacity 0.45s ease-out ${delay}ms, transform 0.45s ease-out ${delay}ms`,
       }}
     >
       {children}
@@ -50,26 +50,26 @@ export default function Hero() {
   // Text scramble for name
   const { displayText: scrambledName } = useTextScramble(
     personalInfo.name,
-    { duration: 1200, delay: visible ? 300 : 99999, revealDirection: 'start' }
+    { duration: 650, delay: visible ? 250 : 99999, revealDirection: 'start' }
   );
 
   return (
     <section
       ref={ref}
-      className="relative flex min-h-screen items-center pt-20"
+      className="relative flex min-h-screen items-center overflow-hidden pt-20"
       aria-label="Introduction"
     >
-      {/* Creative background with floating elements */}
+      {/* Creative background with floating elements - responsive sizes */}
       <div className="pointer-events-none absolute inset-0 overflow-hidden">
-        {/* Base gradient */}
-        <div className="absolute -top-1/2 right-0 h-[800px] w-[800px] rounded-full bg-accent/5 blur-3xl dark:bg-accent/[0.07]" />
-        <div className="absolute -bottom-1/4 left-0 h-[600px] w-[600px] rounded-full bg-violet-500/5 blur-3xl dark:bg-violet-500/[0.05]" />
+        {/* Base gradient - responsive sizes */}
+        <div className="absolute -top-1/4 right-0 h-[400px] w-[400px] rounded-full bg-accent/5 blur-3xl dark:bg-accent/[0.07] sm:h-[600px] sm:w-[600px] lg:-top-1/2 lg:h-[800px] lg:w-[800px]" />
+        <div className="absolute -bottom-1/4 left-0 h-[300px] w-[300px] rounded-full bg-violet-500/5 blur-3xl dark:bg-violet-500/[0.05] sm:h-[500px] sm:w-[500px] lg:h-[600px] lg:w-[600px]" />
         
-        {/* Floating geometric shapes */}
-        <div className="absolute left-[10%] top-[20%] h-16 w-16 animate-float rounded-xl border border-accent/20 bg-accent/5 backdrop-blur-sm dark:border-accent-light/20 dark:bg-accent-light/5" style={{ animationDelay: '0s' }} />
-        <div className="absolute right-[15%] top-[35%] h-12 w-12 animate-float rounded-full border border-violet-500/20 bg-violet-500/5 backdrop-blur-sm" style={{ animationDelay: '2s' }} />
-        <div className="absolute bottom-[25%] left-[5%] h-20 w-20 animate-float rotate-45 rounded-xl border border-accent/10 bg-accent/3 backdrop-blur-sm dark:border-accent-light/10" style={{ animationDelay: '4s' }} />
-        <div className="absolute bottom-[40%] right-[8%] h-8 w-8 animate-float rounded-lg border border-cyan-500/20 bg-cyan-500/5 backdrop-blur-sm" style={{ animationDelay: '1s' }} />
+        {/* Floating geometric shapes - hidden on mobile, visible from md up to prevent overlap */}
+        <div className="absolute left-[10%] top-[20%] hidden h-12 w-12 animate-pulse-slow rounded-xl border border-accent/15 bg-accent/[0.03] backdrop-blur-sm dark:border-accent-light/15 dark:bg-accent-light/[0.03] md:block lg:h-16 lg:w-16" style={{ animationDelay: '0s' }} />
+        <div className="absolute right-[15%] top-[35%] hidden h-10 w-10 animate-pulse-slow rounded-full border border-violet-500/15 bg-violet-500/[0.03] backdrop-blur-sm md:block lg:h-12 lg:w-12" style={{ animationDelay: '2s' }} />
+        <div className="absolute bottom-[25%] left-[5%] hidden h-14 w-14 animate-pulse-slow rotate-45 rounded-xl border border-accent/10 bg-accent/[0.02] backdrop-blur-sm dark:border-accent-light/10 md:block lg:h-20 lg:w-20" style={{ animationDelay: '4s' }} />
+        <div className="absolute bottom-[40%] right-[8%] hidden h-6 w-6 animate-pulse-slow rounded-lg border border-cyan-500/15 bg-cyan-500/[0.03] backdrop-blur-sm md:block lg:h-8 lg:w-8" style={{ animationDelay: '1s' }} />
         
         {/* Dotted grid pattern */}
         <div 
@@ -103,17 +103,17 @@ export default function Hero() {
               </p>
             </Reveal>
 
-            {/* Name with scramble effect - responsive sizing */}
+            {/* Name with scramble effect - responsive sizing with proper wrapping */}
             <Reveal isInView={visible} delay={100}>
-              <h1 className="text-3xl font-bold text-slate-900 dark:text-slate-light sm:text-4xl md:text-5xl lg:text-display">
+              <h1 className="break-words text-3xl font-bold text-slate-900 dark:text-slate-light sm:text-4xl md:text-5xl lg:text-display">
                 <span className="font-mono">{visible ? scrambledName : personalInfo.name}</span>
                 <span className="text-gradient">.</span>
               </h1>
             </Reveal>
 
-            {/* Tagline - responsive sizing */}
+            {/* Tagline - responsive sizing with wrapping */}
             <Reveal isInView={visible} delay={200}>
-              <h2 className="mt-2 text-xl text-slate-500 dark:text-slate sm:text-2xl md:text-3xl lg:text-4xl lg:leading-tight">
+              <h2 className="mt-2 break-words text-xl text-slate-500 dark:text-slate sm:text-2xl md:text-3xl lg:text-4xl lg:leading-tight">
                 {personalInfo.tagline}
               </h2>
             </Reveal>
@@ -128,13 +128,13 @@ export default function Hero() {
             {/* CTAs with magnetic effect - full width buttons on mobile */}
             <Reveal isInView={visible} delay={400}>
               <div className="mt-6 flex flex-col gap-3 sm:mt-8 sm:flex-row sm:flex-wrap sm:items-center sm:gap-4">
-                <MagneticWrapper strength={0.2} className="w-full sm:w-auto">
+                <MagneticWrapper strength={0.08} className="w-full sm:w-auto">
                   <Button href="#projects" size="lg" className="w-full rounded-full sm:w-auto">
                     View Case Studies
                     <ArrowRightIcon />
                   </Button>
                 </MagneticWrapper>
-                <MagneticWrapper strength={0.2} className="w-full sm:w-auto">
+                <MagneticWrapper strength={0.08} className="w-full sm:w-auto">
                   <Button href="#contact" variant="outline" size="lg" className="w-full rounded-full sm:w-auto">
                     Contact Me
                   </Button>
@@ -170,7 +170,7 @@ export default function Hero() {
           {/* Profile visual - hidden on very small screens, shown from sm up */}
           <Reveal isInView={visible} delay={250} direction="right">
             <div className="mx-auto w-full max-w-xs sm:max-w-sm lg:w-80 lg:flex-shrink-0">
-              <TiltCard tiltAmount={8} className="relative overflow-hidden rounded-2xl border border-gray-200/70 bg-white p-4 shadow-xl shadow-slate-300/20 dark:border-navy-600/70 dark:bg-navy-700 dark:shadow-navy-900/40 sm:rounded-3xl sm:p-6">
+              <TiltCard tiltAmount={3} className="relative overflow-hidden rounded-2xl border border-gray-200/70 bg-white p-4 shadow-xl shadow-slate-300/20 dark:border-navy-600/70 dark:bg-navy-700 dark:shadow-navy-900/40 sm:rounded-3xl sm:p-6">
                 <div className="absolute -right-12 -top-12 h-28 w-28 rounded-full bg-accent/10 blur-2xl dark:bg-accent-light/10 sm:-right-16 sm:-top-16 sm:h-40 sm:w-40" />
 
                 {/* Profile image with proper placeholder */}
@@ -190,7 +190,7 @@ export default function Hero() {
 
                 <div className="mt-4 text-center sm:mt-6">
                   <p className="text-xs font-medium text-slate-500 dark:text-slate-dark sm:text-sm">Based in {personalInfo.location}</p>
-                  <p className="mt-1 text-xs text-slate-600 dark:text-slate sm:text-sm">Open to frontend opportunities and impactful collaborations.</p>
+                  <p className="mt-1 text-xs text-slate-600 dark:text-slate sm:text-sm">Open to AI engineering opportunities and impactful collaborations.</p>
                 </div>
               </TiltCard>
             </div>
