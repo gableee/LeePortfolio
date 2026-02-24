@@ -5,3 +5,4 @@ export { default as Section } from './Section';
 export { default as Badge } from './Badge';
 export { default as Carousel } from './Carousel';
 export { default as Modal } from './Modal';
+export { ImagePlaceholder, AvatarPlaceholder, ProjectPlaceholder } from './Placeholder';

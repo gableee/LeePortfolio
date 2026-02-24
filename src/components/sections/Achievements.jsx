@@ -27,7 +27,7 @@ function StatusBadge({ status }) {
   const badgeStyle = styles[status] || 'bg-slate-100 text-slate-700 dark:bg-slate-700 dark:text-slate-200';
 
   return (
-    <span className={`rounded-full px-3 py-1 text-xs font-semibold ${badgeStyle}`}>
+    <span className={`rounded-full px-2 py-0.5 text-[10px] font-semibold sm:px-3 sm:py-1 sm:text-xs ${badgeStyle}`}>
       {status}
     </span>
   );
@@ -48,7 +48,7 @@ function normalizeCertificateItems(cert) {
   ];
 }
 
-// Compact certification card for grid
+// Compact certification card for grid - mobile-first
 function CompactCertificationCard({ cert, onClick }) {
   const certificateItems = normalizeCertificateItems(cert);
   const categoryIcon = CATEGORY_ICONS[cert.category] || CATEGORY_ICONS.Other;
@@ -56,34 +56,34 @@ function CompactCertificationCard({ cert, onClick }) {
   return (
     <article
       onClick={onClick}
-      className="group cursor-pointer rounded-xl border border-gray-200/60 bg-white p-5 transition-all hover:border-accent/40 hover:shadow-lg dark:border-navy-600/60 dark:bg-navy-700 dark:hover:border-accent-light/40"
+      className="group cursor-pointer rounded-lg border border-gray-200/60 bg-white p-3.5 transition-all hover:border-accent/40 hover:shadow-lg dark:border-navy-600/60 dark:bg-navy-700 dark:hover:border-accent-light/40 sm:rounded-xl sm:p-5"
     >
-      <div className="flex items-start justify-between gap-3">
-        <div className="text-3xl">{categoryIcon}</div>
-        <div className="flex flex-wrap items-center gap-2">
-          <span className="rounded-full bg-slate-100 px-2.5 py-1 text-xs font-semibold text-slate-600 dark:bg-navy-600 dark:text-slate-light">
+      <div className="flex items-start justify-between gap-2 sm:gap-3">
+        <div className="text-2xl sm:text-3xl">{categoryIcon}</div>
+        <div className="flex flex-wrap items-center gap-1.5 sm:gap-2">
+          <span className="rounded-full bg-slate-100 px-2 py-0.5 text-[10px] font-semibold text-slate-600 dark:bg-navy-600 dark:text-slate-light sm:px-2.5 sm:py-1 sm:text-xs">
             {certificateItems.length} cert{certificateItems.length > 1 ? 's' : ''}
           </span>
           <StatusBadge status={cert.status} />
         </div>
       </div>
 
-      <h4 className="mt-3 font-semibold text-slate-900 transition-colors group-hover:text-accent dark:text-slate-light dark:group-hover:text-accent-light">
+      <h4 className="mt-2.5 text-sm font-semibold text-slate-900 transition-colors group-hover:text-accent dark:text-slate-light dark:group-hover:text-accent-light sm:mt-3 sm:text-base">
         {cert.name}
       </h4>
-      <p className="mt-1 text-sm text-slate-600 dark:text-slate">{cert.issuer}</p>
+      <p className="mt-0.5 text-xs text-slate-600 dark:text-slate sm:mt-1 sm:text-sm">{cert.issuer}</p>
 
       {cert.category && (
-        <span className="mt-3 inline-block rounded-md bg-slate-100 px-2 py-1 text-xs font-medium text-slate-700 dark:bg-navy-600 dark:text-slate-light">
+        <span className="mt-2 inline-block rounded-md bg-slate-100 px-1.5 py-0.5 text-[10px] font-medium text-slate-700 dark:bg-navy-600 dark:text-slate-light sm:mt-3 sm:px-2 sm:py-1 sm:text-xs">
           {cert.category}
         </span>
       )}
 
-      <p className="mt-3 line-clamp-2 text-sm text-slate-600 dark:text-slate">
+      <p className="mt-2 line-clamp-2 text-xs text-slate-600 dark:text-slate sm:mt-3 sm:text-sm">
         {cert.notes}
       </p>
 
-      <div className="mt-4 text-sm font-medium text-accent transition-colors group-hover:text-accent/80 dark:text-accent-light dark:group-hover:text-accent-light/80">
+      <div className="mt-3 text-xs font-medium text-accent transition-colors group-hover:text-accent/80 dark:text-accent-light dark:group-hover:text-accent-light/80 sm:mt-4 sm:text-sm">
         View Details →
       </div>
     </article>
@@ -255,51 +255,53 @@ export default function Achievements() {
     <>
       <Section
         id="achievements"
-        label="05. Certifications & Hackathons"
+        label="06. Certifications & Hackathons"
         title="Continuous Learning & Community"
         subtitle="Credentials and competitions that reflect my growth as an aspiring AI/ML engineer."
       >
-        <div className="space-y-12">
+        <div className="space-y-8 sm:space-y-12">
           {/* Certifications Section */}
           <div>
-            <h3 className="mb-4 text-xl font-semibold text-slate-900 dark:text-slate-light">
+            <h3 className="mb-3 text-base font-semibold text-slate-900 dark:text-slate-light sm:mb-4 sm:text-xl">
               Certifications
             </h3>
 
-            {/* Category Filters */}
-            <div className="mb-5 flex flex-wrap items-center gap-2">
-              {categories.map((category) => {
-                const isActive = category === activeCategory;
-                const count =
-                  category === 'All' ? certificationsData.length : categoryCounts[category] || 0;
+            {/* Category Filters - horizontal scroll on mobile */}
+            <div className="-mx-4 mb-4 overflow-x-auto px-4 sm:mx-0 sm:mb-5 sm:overflow-visible sm:px-0">
+              <div className="flex items-center gap-1.5 sm:flex-wrap sm:gap-2">
+                {categories.map((category) => {
+                  const isActive = category === activeCategory;
+                  const count =
+                    category === 'All' ? certificationsData.length : categoryCounts[category] || 0;
 
-                return (
-                  <button
-                    key={category}
-                    type="button"
-                    onClick={() => setActiveCategory(category)}
-                    className={`rounded-full border px-3 py-1.5 text-xs font-semibold transition-colors ${
-                      isActive
-                        ? 'border-accent bg-accent/10 text-accent dark:border-accent-light dark:bg-accent-light/10 dark:text-accent-light'
-                        : 'border-gray-200/70 bg-white text-slate-600 hover:border-accent/30 dark:border-navy-600 dark:bg-navy-700 dark:text-slate-light dark:hover:border-accent-light/30'
-                    }`}
-                  >
-                    {category} ({count})
-                  </button>
-                );
-              })}
+                  return (
+                    <button
+                      key={category}
+                      type="button"
+                      onClick={() => setActiveCategory(category)}
+                      className={`flex-shrink-0 rounded-full border px-2.5 py-1 text-[10px] font-semibold transition-colors sm:px-3 sm:py-1.5 sm:text-xs ${
+                        isActive
+                          ? 'border-accent bg-accent/10 text-accent dark:border-accent-light dark:bg-accent-light/10 dark:text-accent-light'
+                          : 'border-gray-200/70 bg-white text-slate-600 hover:border-accent/30 dark:border-navy-600 dark:bg-navy-700 dark:text-slate-light dark:hover:border-accent-light/30'
+                      }`}
+                    >
+                      {category} ({count})
+                    </button>
+                  );
+                })}
+              </div>
             </div>
 
-            {/* Horizontal Scrollable Certification Cards */}
+            {/* Horizontal Scrollable Certification Cards - mobile-first width */}
             {filteredCerts.length === 0 ? (
-              <div className="rounded-xl border border-dashed border-gray-300/80 bg-white p-5 text-center text-sm text-slate-600 dark:border-navy-600/80 dark:bg-navy-700 dark:text-slate">
+              <div className="rounded-lg border border-dashed border-gray-300/80 bg-white p-4 text-center text-xs text-slate-600 dark:border-navy-600/80 dark:bg-navy-700 dark:text-slate sm:rounded-xl sm:p-5 sm:text-sm">
                 No certifications found for this category yet.
               </div>
             ) : (
               <div className="relative -mx-4 px-4 sm:mx-0 sm:px-0">
-                <div className="flex gap-4 overflow-x-auto pb-4">
+                <div className="flex gap-3 overflow-x-auto pb-3 sm:gap-4 sm:pb-4">
                   {filteredCerts.map((cert) => (
-                    <div key={cert.name} className="w-80 flex-shrink-0">
+                    <div key={cert.name} className="w-64 flex-shrink-0 sm:w-80">
                       <CompactCertificationCard cert={cert} onClick={() => setSelectedCert(cert)} />
                     </div>
                   ))}
@@ -310,44 +312,44 @@ export default function Achievements() {
 
           {/* Hackathons Section */}
           <div>
-            <h3 className="mb-4 text-xl font-semibold text-slate-900 dark:text-slate-light">
+            <h3 className="mb-3 text-base font-semibold text-slate-900 dark:text-slate-light sm:mb-4 sm:text-xl">
               Hackathons
             </h3>
 
-            {/* Horizontal Scrollable Hackathon Cards */}
+            {/* Horizontal Scrollable Hackathon Cards - mobile-first */}
             <div className="relative -mx-4 px-4 sm:mx-0 sm:px-0">
-              <div className="flex gap-4 overflow-x-auto pb-4">
+              <div className="flex gap-3 overflow-x-auto pb-3 sm:gap-4 sm:pb-4">
                 {hackathonsData.map((hackathon) => (
                   <article
                     key={`${hackathon.event}-${hackathon.year}`}
-                    className="w-80 flex-shrink-0 rounded-xl border border-gray-200/60 bg-white p-5 dark:border-navy-600/60 dark:bg-navy-700"
+                    className="w-64 flex-shrink-0 rounded-lg border border-gray-200/60 bg-white p-3.5 dark:border-navy-600/60 dark:bg-navy-700 sm:w-80 sm:rounded-xl sm:p-5"
                   >
-                    <div className="flex flex-col gap-1">
+                    <div className="flex flex-col gap-0.5 sm:gap-1">
                       <div className="flex items-start justify-between gap-2">
-                        <h4 className="font-semibold text-slate-900 dark:text-slate-light">
+                        <h4 className="text-sm font-semibold text-slate-900 dark:text-slate-light sm:text-base">
                           {hackathon.event}
                         </h4>
-                        <span className="font-mono text-xs text-slate-500 dark:text-slate-dark">
+                        <span className="font-mono text-[10px] text-slate-500 dark:text-slate-dark sm:text-xs">
                           {hackathon.year}
                         </span>
                       </div>
-                      <p className="text-sm text-slate-600 dark:text-slate">{hackathon.organizer}</p>
+                      <p className="text-xs text-slate-600 dark:text-slate sm:text-sm">{hackathon.organizer}</p>
                     </div>
 
-                    <p className="mt-3 text-sm text-slate-700 dark:text-slate-light">
+                    <p className="mt-2 text-xs text-slate-700 dark:text-slate-light sm:mt-3 sm:text-sm">
                       <span className="font-medium">Role:</span> {hackathon.role}
                     </p>
-                    <p className="mt-1 text-sm text-slate-700 dark:text-slate-light">
+                    <p className="mt-0.5 text-xs text-slate-700 dark:text-slate-light sm:mt-1 sm:text-sm">
                       <span className="font-medium">Project:</span> {hackathon.project}
                     </p>
 
-                    <ul className="mt-4 space-y-2">
+                    <ul className="mt-3 space-y-1.5 sm:mt-4 sm:space-y-2">
                       {hackathon.highlights.map((point) => (
                         <li
                           key={point}
-                          className="flex items-start gap-2 text-sm text-slate-600 dark:text-slate"
+                          className="flex items-start gap-1.5 text-xs text-slate-600 dark:text-slate sm:gap-2 sm:text-sm"
                         >
-                          <span className="mt-1.5 h-1.5 w-1.5 flex-shrink-0 rounded-full bg-accent dark:bg-accent-light" />
+                          <span className="mt-1 h-1 w-1 flex-shrink-0 rounded-full bg-accent dark:bg-accent-light sm:mt-1.5 sm:h-1.5 sm:w-1.5" />
                           {point}
                         </li>
                       ))}
@@ -358,10 +360,10 @@ export default function Achievements() {
                         href={hackathon.projectUrl}
                         target="_blank"
                         rel="noopener noreferrer"
-                        className="mt-4 inline-flex items-center gap-2 text-sm font-medium text-accent transition-colors hover:text-accent/80 dark:text-accent-light dark:hover:text-accent-light/80"
+                        className="mt-3 inline-flex items-center gap-1.5 text-xs font-medium text-accent transition-colors hover:text-accent/80 dark:text-accent-light dark:hover:text-accent-light/80 sm:mt-4 sm:gap-2 sm:text-sm"
                       >
                         View Project
-                        <ExternalLinkIcon className="h-4 w-4" />
+                        <ExternalLinkIcon className="h-3.5 w-3.5 sm:h-4 sm:w-4" />
                       </a>
                     )}
                   </article>
