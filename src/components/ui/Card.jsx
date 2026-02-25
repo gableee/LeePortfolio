@@ -1,8 +1,17 @@
 import { cn } from '../../utils/cn';
+import { useSound } from '../../hooks/useSound';
 
-export default function Card({ children, className, hover = true, ...props }) {
+export default function Card({ children, className, hover = true, onMouseEnter, ...props }) {
+  const { playHover } = useSound();
+
+  const handleMouseEnter = (e) => {
+    if (hover) playHover();
+    if (onMouseEnter) onMouseEnter(e);
+  };
+
   return (
     <div
+      onMouseEnter={handleMouseEnter}
       className={cn(
         'rounded-2xl p-6',
         'bg-white dark:bg-navy-700',

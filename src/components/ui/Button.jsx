@@ -1,4 +1,5 @@
 import { cn } from '../../utils/cn';
+import { useSound } from '../../hooks/useSound';
 
 const variants = {
   primary:
@@ -21,8 +22,22 @@ export default function Button({
   size = 'md',
   href,
   className,
+  onClick,
+  onMouseEnter,
   ...props
 }) {
+  const { playHover, playClick } = useSound();
+
+  const handleMouseEnter = (e) => {
+    playHover();
+    if (onMouseEnter) onMouseEnter(e);
+  };
+
+  const handleClick = (e) => {
+    playClick();
+    if (onClick) onClick(e);
+  };
+
   const classes = cn(
     'inline-flex items-center justify-center gap-2 rounded-lg font-medium',
     'transition-all duration-300 focus:outline-none focus-visible:ring-2 focus-visible:ring-accent focus-visible:ring-offset-2',
@@ -34,14 +49,25 @@ export default function Button({
 
   if (href) {
     return (
-      <a href={href} className={classes} {...props}>
+      <a
+        href={href}
+        className={classes}
+        onClick={handleClick}
+        onMouseEnter={handleMouseEnter}
+        {...props}
+      >
         {children}
       </a>
     );
   }
 
   return (
-    <button className={classes} {...props}>
+    <button
+      className={classes}
+      onClick={handleClick}
+      onMouseEnter={handleMouseEnter}
+      {...props}
+    >
       {children}
     </button>
   );
