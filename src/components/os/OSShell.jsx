@@ -77,6 +77,8 @@ export default function OSShell({ children }) {
 
       {/* Main content */}
       <main
+        id="main-content"
+        tabIndex={-1}
         className={cn(
           'relative z-10 flex-1 pb-16 md:pb-14', // Bottom padding for taskbar
           'transition-opacity duration-500 opacity-100'

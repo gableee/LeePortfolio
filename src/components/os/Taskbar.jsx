@@ -4,6 +4,7 @@ import { cn } from '../../utils/cn';
 import { navLinks, personalInfo } from '../../data/portfolio';
 import { useTheme } from '../../hooks/useTheme';
 import ThemeToggle from '../layout/ThemeToggle';
+import IconButton from '../ui/IconButton';
 import {
   MenuIcon,
   CloseIcon,
@@ -79,7 +80,7 @@ function LiveClock() {
   }, []);
 
   return (
-    <span className="font-mono text-[10px] tabular-nums tracking-wider text-slate dark:text-slate-dark">
+    <span className="mono-label-xs tabular-nums text-slate dark:text-slate-dark">
       {time.toLocaleTimeString('en-US', { hour12: false, hour: '2-digit', minute: '2-digit' })}
     </span>
   );
@@ -126,6 +127,19 @@ export default function Taskbar() {
     return () => { document.body.style.overflow = ''; };
   }, [isMobileMenuOpen]);
 
+  useEffect(() => {
+    if (!isMobileMenuOpen) return;
+
+    const onKeyDown = (event) => {
+      if (event.key === 'Escape') {
+        setIsMobileMenuOpen(false);
+      }
+    };
+
+    window.addEventListener('keydown', onKeyDown);
+    return () => window.removeEventListener('keydown', onKeyDown);
+  }, [isMobileMenuOpen]);
+
   const getNavHref = (href) => (isHomePage ? href : `/${href}`);
 
   return (
@@ -159,7 +173,7 @@ export default function Taskbar() {
                 <span className="absolute inline-flex h-full w-full animate-ping rounded-full bg-emerald-400 opacity-75" />
                 <span className="relative inline-flex h-2 w-2 rounded-full bg-emerald-400" />
               </span>
-              <span className="font-mono text-[10px] uppercase tracking-wider text-emerald-400/80">
+              <span className="mono-label-xs text-emerald-400/80">
                 Available
               </span>
             </div>
@@ -173,6 +187,7 @@ export default function Taskbar() {
                 <a
                   key={link.href}
                   href={getNavHref(link.href)}
+                  aria-current={isActive ? 'page' : undefined}
                   className={cn(
                     'group relative flex flex-col items-center gap-1 rounded-lg px-3 py-1.5 transition-all duration-200',
                     isActive
@@ -190,7 +205,7 @@ export default function Taskbar() {
                     {NAV_ICONS[link.href] || NAV_ICONS['#about']}
                   </span>
                   {/* Label */}
-                  <span className="font-mono text-[9px] uppercase tracking-wider">
+                  <span className="mono-label-2xs">
                     {link.label}
                   </span>
                   {/* Active indicator */}
@@ -212,7 +227,7 @@ export default function Taskbar() {
                   style={{ width: `${scrollPercent}%` }}
                 />
               </div>
-              <span className="font-mono text-[10px] tabular-nums text-accent/60">{scrollPercent}%</span>
+              <span className="mono-label-xs tabular-nums text-accent/60">{scrollPercent}%</span>
             </div>
 
             <div className="h-4 w-px bg-navy-600 dark:bg-navy-500" />
@@ -225,30 +240,30 @@ export default function Taskbar() {
 
             {/* Social quick links */}
             <div className="flex items-center gap-1">
-              <a
+              <IconButton
+                as="a"
+                size="sm"
+                variant="ghost"
                 href={personalInfo.social.github}
                 target="_blank"
                 rel="noopener noreferrer"
-                className={cn(
-                  'flex h-7 w-7 items-center justify-center rounded transition-colors',
-                  isDark ? 'text-slate-dark hover:text-accent-light' : 'text-slate-500 hover:text-accent'
-                )}
+                className={isDark ? 'text-slate-dark hover:text-accent-light' : 'text-slate-500 hover:text-accent'}
                 aria-label="GitHub"
               >
                 <GitHubIcon className="h-3.5 w-3.5" />
-              </a>
-              <a
+              </IconButton>
+              <IconButton
+                as="a"
+                size="sm"
+                variant="ghost"
                 href={personalInfo.social.linkedin}
                 target="_blank"
                 rel="noopener noreferrer"
-                className={cn(
-                  'flex h-7 w-7 items-center justify-center rounded transition-colors',
-                  isDark ? 'text-slate-dark hover:text-accent-light' : 'text-slate-500 hover:text-accent'
-                )}
+                className={isDark ? 'text-slate-dark hover:text-accent-light' : 'text-slate-500 hover:text-accent'}
                 aria-label="LinkedIn"
               >
                 <LinkedInIcon className="h-3.5 w-3.5" />
-              </a>
+              </IconButton>
             </div>
           </div>
         </div>
@@ -273,6 +288,7 @@ export default function Taskbar() {
               <a
                 key={link.href}
                 href={getNavHref(link.href)}
+                aria-current={isActive ? 'page' : undefined}
                 className={cn(
                   'flex flex-col items-center gap-0.5 rounded-lg px-2 py-1 transition-colors',
                   isActive
@@ -283,7 +299,7 @@ export default function Taskbar() {
                 <span className={isActive ? 'drop-shadow-[0_0_4px_rgba(6,182,212,0.5)]' : ''}>
                   {NAV_ICONS[link.href] || NAV_ICONS['#about']}
                 </span>
-                <span className="font-mono text-[8px] uppercase tracking-wider">
+                <span className="mono-label-2xs text-[8px]">
                   {link.label.slice(0, 5)}
                 </span>
               </a>
@@ -299,15 +315,17 @@ export default function Taskbar() {
             )}
             aria-label="More navigation"
             aria-expanded={isMobileMenuOpen}
+            aria-controls="mobile-taskbar-menu"
           >
             {isMobileMenuOpen ? <CloseIcon className="h-4 w-4" /> : <MenuIcon className="h-4 w-4" />}
-            <span className="font-mono text-[8px] uppercase tracking-wider">More</span>
+            <span className="mono-label-2xs text-[8px]">More</span>
           </button>
         </div>
       </nav>
 
       {/* Mobile expanded menu */}
       <div
+        id="mobile-taskbar-menu"
         className={cn(
           'fixed inset-x-0 bottom-[52px] z-40 md:hidden transition-all duration-300',
           isMobileMenuOpen
@@ -315,6 +333,9 @@ export default function Taskbar() {
             : 'invisible translate-y-4 opacity-0 pointer-events-none'
         )}
         style={{ paddingBottom: 'env(safe-area-inset-bottom)' }}
+        role="region"
+        aria-label="Mobile taskbar menu"
+        aria-hidden={!isMobileMenuOpen}
       >
         <div className={cn(
           'mx-4 mb-2 rounded-xl border p-4 backdrop-blur-xl',
@@ -323,7 +344,7 @@ export default function Taskbar() {
             : 'border-accent/10 bg-white/95'
         )}>
           <div className="mb-3 flex items-center justify-between">
-            <span className="font-mono text-[10px] uppercase tracking-wider text-accent/60">
+            <span className="mono-label-xs text-accent/60">
               SYS://NAVIGATION
             </span>
             <div className="flex items-center gap-2">
@@ -340,6 +361,7 @@ export default function Taskbar() {
                   key={link.href}
                   href={getNavHref(link.href)}
                   onClick={() => setIsMobileMenuOpen(false)}
+                  aria-current={isActive ? 'page' : undefined}
                   className={cn(
                     'flex items-center gap-2 rounded-lg border px-3 py-2.5 font-mono text-xs transition-all',
                     isActive
@@ -360,31 +382,40 @@ export default function Taskbar() {
 
           {/* Quick social links */}
           <div className="mt-3 flex items-center gap-2 border-t border-accent/10 pt-3">
-            <a
+            <IconButton
+              as="a"
+              size="md"
+              variant="outlined"
               href={personalInfo.social.github}
               target="_blank"
               rel="noopener noreferrer"
-              className="flex h-8 w-8 items-center justify-center rounded-lg border border-navy-600/60 text-slate-dark transition-colors hover:text-accent"
+              className="rounded-lg"
               aria-label="GitHub"
             >
               <GitHubIcon className="h-4 w-4" />
-            </a>
-            <a
+            </IconButton>
+            <IconButton
+              as="a"
+              size="md"
+              variant="outlined"
               href={personalInfo.social.linkedin}
               target="_blank"
               rel="noopener noreferrer"
-              className="flex h-8 w-8 items-center justify-center rounded-lg border border-navy-600/60 text-slate-dark transition-colors hover:text-accent"
+              className="rounded-lg"
               aria-label="LinkedIn"
             >
               <LinkedInIcon className="h-4 w-4" />
-            </a>
-            <a
+            </IconButton>
+            <IconButton
+              as="a"
+              size="md"
+              variant="outlined"
               href={`mailto:${personalInfo.email}`}
-              className="flex h-8 w-8 items-center justify-center rounded-lg border border-navy-600/60 text-slate-dark transition-colors hover:text-accent"
+              className="rounded-lg"
               aria-label="Email"
             >
               <MailIcon className="h-4 w-4" />
-            </a>
+            </IconButton>
           </div>
         </div>
       </div>

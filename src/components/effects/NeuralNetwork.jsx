@@ -1,5 +1,15 @@
 import React, { useEffect, useRef } from 'react';
 
+function createParticle(canvas) {
+  return {
+    x: Math.random() * canvas.width,
+    y: Math.random() * canvas.height,
+    vx: (Math.random() - 0.5) * 0.5,
+    vy: (Math.random() - 0.5) * 0.5,
+    size: Math.random() * 2 + 1,
+  };
+}
+
 const NeuralNetwork = () => {
   const canvasRef = useRef(null);
 
@@ -13,8 +23,6 @@ const NeuralNetwork = () => {
     
     // Configuration
     const particleColor = 'rgba(34, 211, 238, 0.5)'; // cyan-400 with opacity
-    const lineColor = 'rgba(6, 182, 212, 0.15)'; // cyan-500 with low opacity
-    const particleCount = Math.min(window.innerWidth * window.innerHeight / 15000, 100); // Responsive count
     const connectionDistance = 150;
     const mouseDistance = 200;
 
@@ -40,60 +48,42 @@ const NeuralNetwork = () => {
         mouse.y = null;
     }
 
-    class Particle {
-      constructor() {
-        this.x = Math.random() * canvas.width;
-        this.y = Math.random() * canvas.height;
-        this.vx = (Math.random() - 0.5) * 0.5;
-        this.vy = (Math.random() - 0.5) * 0.5;
-        this.size = Math.random() * 2 + 1;
-      }
+    const updateParticle = (particle) => {
+      particle.x += particle.vx;
+      particle.y += particle.vy;
 
-      update() {
-        // Move
-        this.x += this.vx;
-        this.y += this.vy;
+      if (particle.x < 0 || particle.x > canvas.width) particle.vx *= -1;
+      if (particle.y < 0 || particle.y > canvas.height) particle.vy *= -1;
 
-        // Bounce off edges
-        if (this.x < 0 || this.x > canvas.width) this.vx *= -1;
-        if (this.y < 0 || this.y > canvas.height) this.vy *= -1;
+      if (mouse.x == null) return;
 
-        // Mouse interaction
-        if (mouse.x != null) {
-            let dx = mouse.x - this.x;
-            let dy = mouse.y - this.y;
-            let distance = Math.sqrt(dx * dx + dy * dy);
-            
-            if (distance < mouse.radius) {
-                // Gently attract to mouse or push away? Let's connect primarily.
-                // But maybe a slight push to create "swirl" or "avoidance" is cool.
-                // Let's doing a slight attraction for "networking".
-                 const forceDirectionX = dx / distance;
-                 const forceDirectionY = dy / distance;
-                 const force = (mouse.radius - distance) / mouse.radius;
-                 const directionX = forceDirectionX * force * 0.05;
-                 const directionY = forceDirectionY * force * 0.05;
-                 
-                 this.vx += directionX;
-                 this.vy += directionY;
-            }
-        }
-      }
+      const dx = mouse.x - particle.x;
+      const dy = mouse.y - particle.y;
+      const distance = Math.sqrt(dx * dx + dy * dy);
 
-      draw() {
-        ctx.beginPath();
-        ctx.arc(this.x, this.y, this.size, 0, Math.PI * 2);
-        ctx.fillStyle = particleColor;
-        ctx.fill();
-      }
-    }
+      if (distance >= mouse.radius || distance === 0) return;
+
+      const forceDirectionX = dx / distance;
+      const forceDirectionY = dy / distance;
+      const force = (mouse.radius - distance) / mouse.radius;
+
+      particle.vx += forceDirectionX * force * 0.05;
+      particle.vy += forceDirectionY * force * 0.05;
+    };
+
+    const drawParticle = (particle) => {
+      ctx.beginPath();
+      ctx.arc(particle.x, particle.y, particle.size, 0, Math.PI * 2);
+      ctx.fillStyle = particleColor;
+      ctx.fill();
+    };
 
     function initParticles() {
       particles = [];
       // Recalculate count on resize
       const count = Math.min(canvas.width * canvas.height / 15000, 100);
       for (let i = 0; i < count; i++) {
-        particles.push(new Particle());
+        particles.push(createParticle(canvas));
       }
     }
 
@@ -137,8 +127,8 @@ const NeuralNetwork = () => {
       ctx.clearRect(0, 0, canvas.width, canvas.height);
       
       for (let i = 0; i < particles.length; i++) {
-        particles[i].update();
-        particles[i].draw();
+        updateParticle(particles[i]);
+        drawParticle(particles[i]);
       }
       connect();
       animationFrameId = requestAnimationFrame(animate);

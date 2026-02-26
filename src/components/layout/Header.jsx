@@ -26,6 +26,19 @@ export default function Header() {
     return () => { document.body.style.overflow = ''; };
   }, [isMobileMenuOpen]);
 
+  useEffect(() => {
+    if (!isMobileMenuOpen) return;
+
+    const onKeyDown = (event) => {
+      if (event.key === 'Escape') {
+        setIsMobileMenuOpen(false);
+      }
+    };
+
+    window.addEventListener('keydown', onKeyDown);
+    return () => window.removeEventListener('keydown', onKeyDown);
+  }, [isMobileMenuOpen]);
+
   // For non-home pages, navigation should go to home with hash
   const getNavHref = (href) => {
     return isHomePage ? href : `/${href}`;
@@ -74,6 +87,7 @@ export default function Header() {
             className="flex h-11 w-11 items-center justify-center rounded-lg text-slate-600 transition-colors hover:bg-gray-100 active:bg-gray-200 dark:text-slate dark:hover:bg-navy-700 dark:active:bg-navy-600"
             aria-label="Toggle menu"
             aria-expanded={isMobileMenuOpen}
+            aria-controls="mobile-header-menu"
           >
             {isMobileMenuOpen ? <CloseIcon /> : <MenuIcon />}
           </button>
@@ -82,6 +96,7 @@ export default function Header() {
 
       {/* Mobile Menu - proper full height and safe spacing */}
       <div
+        id="mobile-header-menu"
         className={cn(
           'fixed inset-x-0 top-[calc(100%)] bottom-0 z-40 md:hidden',
           'transition-all duration-300',
@@ -89,6 +104,9 @@ export default function Header() {
             ? 'visible opacity-100'
             : 'invisible opacity-0 pointer-events-none'
         )}
+        role="region"
+        aria-label="Mobile navigation menu"
+        aria-hidden={!isMobileMenuOpen}
       >
         <div className="h-full bg-white/95 backdrop-blur-lg dark:bg-navy-800/95">
           <div className="flex flex-col gap-0.5 px-4 py-4 sm:gap-1 sm:px-6 sm:py-8">

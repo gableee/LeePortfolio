@@ -1,10 +1,10 @@
-import { useEffect, useState, useMemo, useRef } from 'react';
+import { useEffect, useState, useMemo, useRef, useCallback } from 'react';
 import { createPortal } from 'react-dom';
 import { useNavigate, useLocation } from 'react-router-dom';
 import { useTheme } from '../../hooks/useTheme';
 import { navLinks, personalInfo } from '../../data/portfolio';
 import { cn } from '../../utils/cn';
-import { SunIcon, MoonIcon, GitHubIcon, LinkedInIcon, ExternalLinkIcon, MailIcon } from '../icons';
+import { SunIcon, MoonIcon, GitHubIcon, LinkedInIcon, MailIcon } from '../icons';
 
 // Simple search icon since it wasn't in icons.jsx and I want to keep changes localized
 function SearchIcon({ className }) {
@@ -30,10 +30,21 @@ export default function CommandPalette() {
   
   const inputRef = useRef(null);
   const listRef = useRef(null);
+  const previousFocusRef = useRef(null);
   
   const navigate = useNavigate();
   const location = useLocation();
   const { theme, toggleTheme } = useTheme();
+  const resultsId = 'command-palette-results';
+  const headingId = 'command-palette-heading';
+
+  const getOptionId = (index) => `command-option-${index}`;
+
+  const closePalette = useCallback(() => {
+    setIsOpen(false);
+    setQuery('');
+    setSelectedIndex(0);
+  }, []);
 
   // Define commands
   const commands = useMemo(() => {
@@ -48,7 +59,7 @@ export default function CommandPalette() {
           const element = document.querySelector(link.href);
           if (element) element.scrollIntoView({ behavior: 'smooth' });
         }
-        setIsOpen(false);
+        closePalette();
       },
       icon: <ArrowRightIcon className="w-5 h-5 text-slate-400 group-hover:text-accent dark:group-hover:text-accent-light" />
     }));
@@ -60,7 +71,7 @@ export default function CommandPalette() {
         category: 'Social',
         action: () => {
           window.open(personalInfo.social.github, '_blank');
-          setIsOpen(false);
+          closePalette();
         },
         icon: <GitHubIcon className="w-5 h-5 text-slate-400 group-hover:text-accent dark:group-hover:text-accent-light" />
       },
@@ -70,7 +81,7 @@ export default function CommandPalette() {
         category: 'Social',
         action: () => {
           window.open(personalInfo.social.linkedin, '_blank');
-          setIsOpen(false);
+          closePalette();
         },
         icon: <LinkedInIcon className="w-5 h-5 text-slate-400 group-hover:text-accent dark:group-hover:text-accent-light" />
       },
@@ -80,7 +91,7 @@ export default function CommandPalette() {
         category: 'Social',
         action: () => {
           window.location.href = `mailto:${personalInfo.email}`;
-          setIsOpen(false);
+          closePalette();
         },
         icon: <MailIcon className="w-5 h-5 text-slate-400 group-hover:text-accent dark:group-hover:text-accent-light" />
       }
@@ -93,7 +104,7 @@ export default function CommandPalette() {
         category: 'Theme',
         action: () => {
           toggleTheme();
-          setIsOpen(false);
+          closePalette();
         },
         icon: theme === 'dark' 
           ? <SunIcon className="w-5 h-5 text-slate-400 group-hover:text-yellow-400" />
@@ -102,7 +113,7 @@ export default function CommandPalette() {
     ];
 
     return [...navs, ...themes, ...socials];
-  }, [navigate, location.pathname, theme, toggleTheme]);
+  }, [closePalette, navigate, location.pathname, theme, toggleTheme]);
 
   const filteredCommands = useMemo(() => {
     if (!query) return commands;
@@ -113,37 +124,69 @@ export default function CommandPalette() {
     );
   }, [query, commands]);
 
-  // Reset selection when query changes
-  useEffect(() => {
-    setSelectedIndex(0);
-  }, [query]);
+  const liveAnnouncement = useMemo(() => {
+    if (!isOpen) return '';
+    if (!filteredCommands.length) {
+      return query ? `No results found for ${query}.` : 'No commands available.';
+    }
+
+    const selectedCommand = filteredCommands[selectedIndex];
+    if (!selectedCommand) {
+      return `${filteredCommands.length} commands available.`;
+    }
+
+    return `${filteredCommands.length} commands available. Selected ${selectedCommand.label}, ${selectedCommand.category}.`;
+  }, [filteredCommands, isOpen, query, selectedIndex]);
 
   // Handle keyboard shortcuts
   useEffect(() => {
     const onKeyDown = (e) => {
-      if ((e.key === 'k' && (e.metaKey || e.ctrlKey)) || e.key === '/') {
+      const target = e.target;
+      const isTypingTarget =
+        target instanceof HTMLElement &&
+        (target.isContentEditable || ['INPUT', 'TEXTAREA', 'SELECT'].includes(target.tagName));
+
+      if ((e.key === 'k' && (e.metaKey || e.ctrlKey)) || (e.key === '/' && !isTypingTarget)) {
         e.preventDefault();
-        setIsOpen(prev => !prev);
+        if (isOpen) {
+          closePalette();
+        } else {
+          setIsOpen(true);
+        }
       } else if (e.key === 'Escape') {
-        setIsOpen(false);
+        closePalette();
       }
     };
 
     window.addEventListener('keydown', onKeyDown);
     return () => window.removeEventListener('keydown', onKeyDown);
-  }, []);
+  }, [closePalette, isOpen]);
 
   // Handle list navigation
   useEffect(() => {
     if (!isOpen) return;
 
     const onKeyDown = (e) => {
+      if (e.key === 'Escape') {
+        e.preventDefault();
+        closePalette();
+        return;
+      }
+
+      if (!filteredCommands.length) return;
+
       if (e.key === 'ArrowDown') {
         e.preventDefault();
         setSelectedIndex(prev => (prev + 1) % filteredCommands.length);
       } else if (e.key === 'ArrowUp') {
         e.preventDefault();
         setSelectedIndex(prev => (prev - 1 + filteredCommands.length) % filteredCommands.length);
+      } else if (e.key === 'Home') {
+        e.preventDefault();
+        setSelectedIndex(0);
+      } else if (e.key === 'End') {
+        e.preventDefault();
+        setSelectedIndex(filteredCommands.length - 1);
       } else if (e.key === 'Enter') {
         e.preventDefault();
         if (filteredCommands[selectedIndex]) {
@@ -154,23 +197,28 @@ export default function CommandPalette() {
 
     window.addEventListener('keydown', onKeyDown);
     return () => window.removeEventListener('keydown', onKeyDown);
-  }, [isOpen, filteredCommands, selectedIndex]);
+  }, [closePalette, isOpen, filteredCommands, selectedIndex]);
 
   // Focus input on open
   useEffect(() => {
     if (isOpen) {
+      previousFocusRef.current = document.activeElement;
       setTimeout(() => inputRef.current?.focus(), 50);
       document.body.style.overflow = 'hidden';
     } else {
       document.body.style.overflow = '';
-      setQuery('');
+      const previousFocus = previousFocusRef.current;
+      if (previousFocus instanceof HTMLElement) {
+        previousFocus.focus();
+      }
     }
   }, [isOpen]);
 
   // Scroll active item into view
   useEffect(() => {
-    if (listRef.current && listRef.current.children[selectedIndex]) {
-      listRef.current.children[selectedIndex].scrollIntoView({
+    const activeOption = listRef.current?.querySelector(`[data-option-index="${selectedIndex}"]`);
+    if (activeOption) {
+      activeOption.scrollIntoView({
         block: 'nearest',
       });
     }
@@ -179,15 +227,24 @@ export default function CommandPalette() {
   if (!isOpen) return null;
 
   return createPortal(
-    <div className="fixed inset-0 z-[100] flex items-start justify-center pt-[15vh] px-4">
+    <div className="fixed inset-0 z-[100] flex items-start justify-center pt-[15vh] px-4" role="presentation">
       {/* Backdrop */}
       <div 
         className="fixed inset-0 bg-black/40 backdrop-blur-sm transition-opacity"
-        onClick={() => setIsOpen(false)}
+        onClick={closePalette}
       />
 
       {/* Modal */}
-      <div className="relative w-full max-w-2xl transform overflow-hidden rounded-xl bg-slate-900 shadow-2xl ring-1 ring-slate-800 transition-all dark:bg-slate-900 dark:ring-slate-700 bg-white ring-slate-200">
+      <div
+        className="relative w-full max-w-2xl transform overflow-hidden rounded-xl bg-white shadow-2xl ring-1 ring-slate-200 transition-all dark:bg-slate-900 dark:ring-slate-700"
+        role="dialog"
+        aria-modal="true"
+        aria-labelledby={headingId}
+      >
+        <h2 id={headingId} className="sr-only">Command palette</h2>
+        <p className="sr-only" role="status" aria-live="polite" aria-atomic="true">
+          {liveAnnouncement}
+        </p>
         
         {/* Input */}
         <div className="flex items-center border-b border-slate-200 dark:border-slate-800 px-4">
@@ -197,7 +254,15 @@ export default function CommandPalette() {
             className="h-14 w-full bg-transparent px-4 text-slate-900 dark:text-slate-100 placeholder:text-slate-500 outline-none font-mono text-sm"
             placeholder="Type a command or search..."
             value={query}
-            onChange={(e) => setQuery(e.target.value)}
+            role="combobox"
+            aria-autocomplete="list"
+            aria-expanded="true"
+            aria-controls={resultsId}
+            aria-activedescendant={filteredCommands.length ? getOptionId(selectedIndex) : undefined}
+            onChange={(e) => {
+              setQuery(e.target.value);
+              setSelectedIndex(0);
+            }}
           />
           <div className="hidden sm:flex text-xs text-slate-500 font-mono gap-1">
             <kbd className="px-2 py-1 bg-slate-100 dark:bg-slate-800 rounded border border-slate-200 dark:border-slate-700">ESC</kbd>
@@ -208,6 +273,8 @@ export default function CommandPalette() {
         {/* Results */}
         <div 
           ref={listRef}
+          id={resultsId}
+          role="listbox"
           className="max-h-[60vh] overflow-y-auto overflow-x-hidden py-2"
         >
           {filteredCommands.length === 0 ? (
@@ -216,11 +283,15 @@ export default function CommandPalette() {
             </div>
           ) : (
             filteredCommands.map((command, index) => (
-              <div
+              <button
+                type="button"
                 key={command.id}
-                role="button"
+                id={getOptionId(index)}
+                role="option"
+                aria-selected={index === selectedIndex}
+                data-option-index={index}
                 className={cn(
-                  "group flex cursor-pointer items-center justify-between px-4 py-3 text-sm transition-colors mx-2 rounded-lg",
+                  "group mx-2 flex w-[calc(100%-1rem)] cursor-pointer items-center justify-between rounded-lg px-4 py-3 text-left text-sm transition-colors",
                   index === selectedIndex 
                     ? "bg-slate-100 dark:bg-slate-800 text-slate-900 dark:text-slate-100" 
                     : "text-slate-600 dark:text-slate-400 hover:bg-slate-50 dark:hover:bg-slate-800/50"
@@ -237,7 +308,7 @@ export default function CommandPalette() {
                     {command.category}
                   </span>
                 )}
-              </div>
+              </button>
             ))
           )}
         </div>
