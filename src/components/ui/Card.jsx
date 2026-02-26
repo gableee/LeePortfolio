@@ -1,8 +1,13 @@
 import { cn } from '../../utils/cn';
 
-export default function Card({ children, className, hover = true, ...props }) {
+export default function Card({ children, className, hover = true, onMouseEnter, ...props }) {
+  const handleMouseEnter = (e) => {
+    if (onMouseEnter) onMouseEnter(e);
+  };
+
   return (
     <div
+      onMouseEnter={handleMouseEnter}
       className={cn(
         'rounded-2xl p-6',
         'bg-white dark:bg-navy-700',

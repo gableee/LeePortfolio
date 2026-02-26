@@ -16,7 +16,7 @@ export default function Section({
     <section
       id={id}
       ref={ref}
-      className={cn('py-12 sm:py-16 md:py-20 lg:py-28', className)}
+      className={cn('py-14 sm:py-16 md:py-20 lg:py-24', className)}
       {...props}
     >
       <div
@@ -28,13 +28,13 @@ export default function Section({
         }}
       >
         {(label || title) && (
-          <div className="mb-8 sm:mb-10 md:mb-12 lg:mb-16">
+          <div className="mb-8 sm:mb-10 md:mb-12 lg:mb-14">
             {label && (
-              <span className="mb-2 block font-mono text-xs text-accent dark:text-accent-light sm:mb-3 sm:text-sm">
+              <span className="section-eyebrow mb-3 sm:mb-4">
                 {label}
               </span>
             )}
-            {title && <h2 className="section-heading">{title}</h2>}
+            {title && <h2 className="section-heading max-w-3xl">{title}</h2>}
             {subtitle && <p className="section-subheading">{subtitle}</p>}
           </div>
         )}

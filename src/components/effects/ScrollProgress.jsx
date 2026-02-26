@@ -33,23 +33,25 @@ export default function ScrollProgress() {
         />
       </div>
       
-      {/* Side progress indicator */}
+      {/* Side progress indicator - only on larger screens with proper spacing */}
       <div
-        className="fixed bottom-8 right-8 z-50 hidden lg:block"
+        className="fixed bottom-6 right-4 z-50 hidden sm:block"
         style={{ 
           opacity: isVisible ? 1 : 0, 
           transform: isVisible ? 'translateX(0)' : 'translateX(20px)',
           transition: 'all 0.3s ease-out' 
         }}
       >
-        <div className="relative h-24 w-1 overflow-hidden rounded-full bg-gray-200/50 dark:bg-navy-600/50">
-          <div
-            className="absolute bottom-0 left-0 w-full rounded-full bg-gradient-to-t from-accent to-violet-500 transition-all duration-150"
-            style={{ height: `${progress}%` }}
-          />
-        </div>
-        <div className="mt-2 text-center font-mono text-[10px] text-slate-500 dark:text-slate-dark">
-          {Math.round(progress)}%
+        <div className="flex flex-col items-center">
+          <div className="relative h-20 w-1 overflow-hidden rounded-full bg-gray-200/50 shadow-lg dark:bg-navy-600/50">
+            <div
+              className="absolute bottom-0 left-0 w-full rounded-full bg-gradient-to-t from-accent to-violet-500 transition-all duration-150"
+              style={{ height: `${progress}%` }}
+            />
+          </div>
+          <span className="mt-1.5 font-mono text-[9px] tabular-nums text-slate-500 dark:text-slate-dark">
+            {Math.round(progress)}%
+          </span>
         </div>
       </div>
     </>

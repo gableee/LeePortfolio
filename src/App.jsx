@@ -2,6 +2,8 @@ import { lazy, Suspense } from 'react';
 import { BrowserRouter, Routes, Route } from 'react-router-dom';
 import Layout from './components/layout/Layout';
 import Hero from './components/sections/Hero';
+import NeuralNetwork from './components/effects/NeuralNetwork';
+import CommandPalette from './components/ui/CommandPalette';
 
 const About = lazy(() => import('./components/sections/About'));
 const FrontendFocus = lazy(() => import('./components/sections/FrontendFocus'));
@@ -52,6 +54,8 @@ function HomePage() {
 function App() {
   return (
     <BrowserRouter>
+      <NeuralNetwork />
+      <CommandPalette />
       <Routes>
         <Route path="/" element={<HomePage />} />
         <Route

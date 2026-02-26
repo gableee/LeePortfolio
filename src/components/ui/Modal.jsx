@@ -40,11 +40,11 @@ export default function Modal({ isOpen, onClose, title, children }) {
 
       {/* Modal */}
       <div
-        className="relative z-10 w-full max-w-3xl max-h-[90vh] overflow-y-auto rounded-2xl border border-gray-200/60 bg-white shadow-2xl dark:border-navy-600/60 dark:bg-navy-800"
+        className="relative z-10 w-full max-w-[95vw] sm:max-w-2xl lg:max-w-3xl max-h-[90vh] overflow-y-auto rounded-xl border border-gray-200/60 bg-white shadow-2xl dark:border-navy-600/60 dark:bg-navy-800 sm:rounded-2xl"
         onClick={(e) => e.stopPropagation()}
       >
         {/* Header */}
-        <div className="sticky top-0 z-20 flex items-start justify-between gap-4 border-b border-gray-200/60 bg-white/95 p-6 backdrop-blur-sm dark:border-navy-600/60 dark:bg-navy-800/95">
+        <div className="sticky top-0 z-20 flex items-start justify-between gap-3 border-b border-gray-200/60 bg-white/95 p-4 backdrop-blur-sm dark:border-navy-600/60 dark:bg-navy-800/95 sm:gap-4 sm:p-6">
           <h2
             id="modal-title"
             className="text-2xl font-bold text-slate-900 dark:text-slate-light"

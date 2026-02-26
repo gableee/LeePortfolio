@@ -6,6 +6,7 @@
   html {
     scroll-behavior: smooth;
     scroll-padding-top: 5rem;
+    overflow-x: hidden; /* Prevent horizontal scroll from overflow elements */
   }
 
   body {
@@ -13,6 +14,7 @@
     font-family: 'Inter', system-ui, -apple-system, sans-serif;
     margin: 0;
     min-width: 320px;
+    overflow-x: hidden; /* Prevent horizontal scroll */
     -webkit-font-smoothing: antialiased;
     -moz-osx-font-smoothing: grayscale;
   }
@@ -47,10 +49,15 @@
 @layer components {
   .section-heading {
     @apply text-2xl font-bold text-slate-900 dark:text-slate-light mb-1.5 sm:text-3xl sm:mb-2 md:text-heading;
+    word-wrap: break-word;
+    overflow-wrap: break-word;
+    hyphens: auto;
   }
 
   .section-subheading {
     @apply text-sm text-slate-600 dark:text-slate mb-6 max-w-3xl leading-relaxed sm:text-base sm:mb-8 md:text-subheading md:mb-10;
+    word-wrap: break-word;
+    overflow-wrap: break-word;
   }
 
   .text-gradient {

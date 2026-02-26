@@ -61,9 +61,9 @@ export default function Skills() {
           {/* Background Gradient */}
           <div className={`absolute inset-0 bg-gradient-to-br ${selectedSkill.gradient} transition-all duration-700`} />
           
-          {/* Large Background Icon - smaller on mobile */}
-          <div className="absolute right-0 top-1/2 -translate-y-1/2 translate-x-1/3 opacity-[0.06] transition-opacity duration-700 dark:opacity-[0.12] sm:translate-x-1/4 sm:opacity-[0.08] dark:sm:opacity-[0.15]">
-            {selectedSkill.icon && <selectedSkill.icon className="h-48 w-48 sm:h-72 sm:w-72 lg:h-[400px] lg:w-[400px]" />}
+          {/* Large Background Icon - hidden on very small, scales up */}
+          <div className="absolute right-0 top-1/2 -translate-y-1/2 translate-x-1/2 opacity-[0.04] transition-opacity duration-700 dark:opacity-[0.08] sm:translate-x-1/3 sm:opacity-[0.06] dark:sm:opacity-[0.12] md:opacity-[0.08] dark:md:opacity-[0.15]">
+            {selectedSkill.icon && <selectedSkill.icon className="h-32 w-32 sm:h-48 sm:w-48 md:h-64 md:w-64 lg:h-80 lg:w-80 xl:h-[400px] xl:w-[400px]" />}
           </div>
 
           {/* Content - mobile-first padding */}

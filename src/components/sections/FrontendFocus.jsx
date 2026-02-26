@@ -5,9 +5,9 @@ export default function FrontendFocus() {
   return (
     <Section
       id="frontend"
-      label="02. Frontend Focus"
-      title="What to Showcase First"
-      subtitle="A practical frontend-first blueprint with sample content you can replace as your portfolio grows."
+      label="02. AI Engineering Focus"
+      title="What to Showcase for AI Roles"
+      subtitle="A practical AI-first blueprint that still highlights your frontend strength as a valuable edge."
     >
       <div className="space-y-8">
         <div className="grid gap-5 md:grid-cols-3">
@@ -47,7 +47,7 @@ export default function FrontendFocus() {
             Suggested Sections You Can Add Later
           </h3>
           <p className="mt-1 text-sm text-slate-600 dark:text-slate">
-            These are optional, but they are high-signal for engineers and hiring teams.
+            These are optional, but they are high-signal for AI hiring teams.
           </p>
 
           <div className="mt-5 space-y-4">

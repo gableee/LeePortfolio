@@ -61,7 +61,7 @@ export default function Header() {
               {link.label}
             </a>
           ))}
-          <div className="ml-2 border-l border-gray-200 pl-2 dark:border-navy-600">
+          <div className="ml-2 flex items-center gap-2 border-l border-gray-200 pl-2 dark:border-navy-600">
             <ThemeToggle />
           </div>
         </div>
