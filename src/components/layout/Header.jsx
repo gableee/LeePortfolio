@@ -3,7 +3,6 @@ import { Link, useLocation } from 'react-router-dom';
 import { cn } from '../../utils/cn';
 import { navLinks } from '../../data/portfolio';
 import ThemeToggle from './ThemeToggle';
-import SoundToggle from './SoundToggle';
 import { MenuIcon, CloseIcon } from '../icons';
 
 export default function Header() {
@@ -63,14 +62,12 @@ export default function Header() {
             </a>
           ))}
           <div className="ml-2 flex items-center gap-2 border-l border-gray-200 pl-2 dark:border-navy-600">
-            <SoundToggle />
             <ThemeToggle />
           </div>
         </div>
 
         {/* Mobile Controls - larger touch targets */}
         <div className="flex items-center gap-1 md:hidden">
-          <SoundToggle />
           <ThemeToggle />
           <button
             onClick={() => setIsMobileMenuOpen(!isMobileMenuOpen)}

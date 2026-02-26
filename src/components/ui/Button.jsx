@@ -1,5 +1,4 @@
 import { cn } from '../../utils/cn';
-import { useSound } from '../../hooks/useSound';
 
 const variants = {
   primary:
@@ -26,15 +25,11 @@ export default function Button({
   onMouseEnter,
   ...props
 }) {
-  const { playHover, playClick } = useSound();
-
   const handleMouseEnter = (e) => {
-    playHover();
     if (onMouseEnter) onMouseEnter(e);
   };
 
   const handleClick = (e) => {
-    playClick();
     if (onClick) onClick(e);
   };
 

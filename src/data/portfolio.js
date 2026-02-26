@@ -2,6 +2,7 @@ export const personalInfo = {
   name: 'Your Name',
   title: 'Aspiring AI Engineer | 3rd Year Student',
   tagline: 'Building practical AI projects with strong product and frontend fundamentals.',
+  impactHeadline: 'I build AI experiences that are reliable, measurable, and ready for real users.',
   description:
     'I am a 3rd-year student aspiring to become an AI Engineer, focused on building practical, reliable, and user-centered intelligent products. I combine machine learning curiosity with strong frontend engineering to deliver end-to-end solutions people can actually use. I am actively preparing for internship opportunities next year.',
   email: 'your.email@example.com',
@@ -12,6 +13,12 @@ export const personalInfo = {
     linkedin: 'https://linkedin.com/in/yourusername',
     twitter: 'https://twitter.com/yourusername',
   },
+  focusAreas: ['AI Product Engineering', 'Frontend Systems', 'Reliable Delivery'],
+  proofPoints: [
+    '10+ project builds across web and AI experiments',
+    'Performance and accessibility-first implementation habits',
+    'Actively preparing portfolio-ready case studies for internships',
+  ],
 };
 
 export const aboutData = {

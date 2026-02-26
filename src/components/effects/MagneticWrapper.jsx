@@ -1,4 +1,4 @@
-import { useRef, useState } from 'react';
+import { useEffect, useRef, useState } from 'react';
 import { cn } from '../../utils/cn';
 
 export default function MagneticWrapper({ 
@@ -10,9 +10,31 @@ export default function MagneticWrapper({
 }) {
   const ref = useRef(null);
   const [position, setPosition] = useState({ x: 0, y: 0 });
+  const [canAnimate, setCanAnimate] = useState(true);
+
+  useEffect(() => {
+    const reducedMotionQuery = window.matchMedia('(prefers-reduced-motion: reduce)');
+    const finePointerQuery = window.matchMedia('(hover: hover) and (pointer: fine)');
+
+    const syncCapability = () => {
+      setCanAnimate(!reducedMotionQuery.matches && finePointerQuery.matches);
+      if (reducedMotionQuery.matches || !finePointerQuery.matches) {
+        setPosition({ x: 0, y: 0 });
+      }
+    };
+
+    syncCapability();
+    reducedMotionQuery.addEventListener('change', syncCapability);
+    finePointerQuery.addEventListener('change', syncCapability);
+
+    return () => {
+      reducedMotionQuery.removeEventListener('change', syncCapability);
+      finePointerQuery.removeEventListener('change', syncCapability);
+    };
+  }, []);
 
   const handleMouseMove = (e) => {
-    if (!ref.current) return;
+    if (!ref.current || !canAnimate) return;
     
     const rect = ref.current.getBoundingClientRect();
     const centerX = rect.left + rect.width / 2;
@@ -42,7 +64,7 @@ export default function MagneticWrapper({
       onMouseMove={handleMouseMove}
       onMouseLeave={handleMouseLeave}
       style={{
-        transform: `translate(${position.x}px, ${position.y}px)`,
+        transform: canAnimate ? `translate(${position.x}px, ${position.y}px)` : 'none',
         transition: position.x === 0 && position.y === 0 
           ? 'transform 0.5s cubic-bezier(0.33, 1, 0.68, 1)' 
           : 'transform 0.1s ease-out',

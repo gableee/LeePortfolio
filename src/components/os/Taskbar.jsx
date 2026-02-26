@@ -4,7 +4,6 @@ import { cn } from '../../utils/cn';
 import { navLinks, personalInfo } from '../../data/portfolio';
 import { useTheme } from '../../hooks/useTheme';
 import ThemeToggle from '../layout/ThemeToggle';
-import SoundToggle from '../layout/SoundToggle';
 import {
   MenuIcon,
   CloseIcon,
@@ -223,7 +222,6 @@ export default function Taskbar() {
             <div className="h-4 w-px bg-navy-600 dark:bg-navy-500" />
 
             <ThemeToggle />
-            <SoundToggle />
 
             {/* Social quick links */}
             <div className="flex items-center gap-1">
@@ -330,7 +328,6 @@ export default function Taskbar() {
             </span>
             <div className="flex items-center gap-2">
               <ThemeToggle />
-              <SoundToggle />
               <LiveClock />
             </div>
           </div>
