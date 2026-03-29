@@ -1,11 +1,11 @@
 export const personalInfo = {
   name: 'Your Name',
   title: 'Aspiring AI Engineer | 3rd Year Student',
-  tagline: 'Building practical AI projects with strong product and frontend fundamentals.',
-  impactHeadline: 'I build AI experiences that are reliable, measurable, and ready for real users.',
+  tagline: 'Building intelligent systems and AI-driven experiences with strong engineering fundamentals.',
+  impactHeadline: 'I build AI systems that are practical, reliable, and ready for real users.',
   description:
-    'I am a 3rd-year student aspiring to become an AI Engineer, focused on building practical, reliable, and user-centered intelligent products. I combine machine learning curiosity with strong frontend engineering to deliver end-to-end solutions people can actually use. I am actively preparing for internship opportunities next year.',
-  email: 'your.email@example.com',
+    "I'm a 3rd-year Computer Science student focused on AI engineering — from training models to building the full-stack systems around them. I enjoy turning ideas into working products, whether that's an ML experiment, an AI agent, or a web app that ties it all together.",
+  email: '17leegab@gmail.com',
   location: 'Your City, Country',
   photo: '/profile-photo.jpg',
   social: {
@@ -13,24 +13,24 @@ export const personalInfo = {
     linkedin: 'https://linkedin.com/in/yourusername',
     twitter: 'https://twitter.com/yourusername',
   },
-  focusAreas: ['AI Product Engineering', 'Frontend Systems', 'Reliable Delivery'],
+  focusAreas: ['AI Systems', 'Agentic Engineering', 'Full-Stack Development'],
   proofPoints: [
-    '10+ project builds across web and AI experiments',
-    'Performance and accessibility-first implementation habits',
-    'Actively preparing portfolio-ready case studies for internships',
+    'Building projects across AI, web, and blockchain domains',
+    'Hands-on with PyTorch, scikit-learn, FastAPI, and React',
+    'Actively pursuing AI/ML certifications and hackathon experience',
   ],
 };
 
 export const aboutData = {
   summary: [
-    "I'm a 3rd-year student and aspiring AI Engineer who enjoys turning complex problems into practical systems. I use frontend engineering as a strength to make AI experiences clear, usable, and trustworthy.",
-    "Right now, my focus is strengthening ML fundamentals, building portfolio-ready AI projects, and improving the engineering practices needed to ship reliable products.",
-    "When I'm not coding, you'll find me studying machine learning, joining hackathons, experimenting with new ideas, and preparing for internship opportunities.",
+    "I'm a Computer Science student exploring the intersection of AI and software engineering. I enjoy building things that actually work — from ML experiments and AI agents to full-stack web apps that bring models to life.",
+    "Right now, I'm working with PyTorch and scikit-learn, building API-backed AI projects with FastAPI, and completing a blockchain-based thesis that uses sentiment analysis. I learn best by shipping real things.",
+    "Outside of coursework, you'll find me in hackathons, experimenting with agentic AI systems, or diving into a new framework. I'm always looking for the next hard problem to solve by building.",
   ],
   highlights: [
     { label: 'Year Level', value: '3rd Year' },
-    { label: 'Projects Built', value: '10+' },
-    { label: 'Focus Area', value: 'AI + Product' },
+    { label: 'Currently', value: 'Building' },
+    { label: 'Focus Area', value: 'AI Systems' },
   ],
 };
 
@@ -82,39 +82,36 @@ export const frontendFocusData = {
 
 export const skillsData = [
   {
-    category: 'Frontend Core',
+    category: 'Languages & Frameworks',
     skills: [
-      { name: 'React / Next.js', level: 95 },
-      { name: 'TypeScript', level: 90 },
-      { name: 'JavaScript (ES2024)', level: 95 },
-      { name: 'HTML5 / CSS3', level: 95 },
+      { name: 'Java' },
+      { name: 'JavaScript (ES2024)' },
+      { name: 'TypeScript' },
+      { name: 'Node.js' },
+      { name: 'Python' },
+      { name: 'FastAPI' },
+      { name: 'Solidity' },
+      { name: 'PyTorch' },
+      { name: 'scikit-learn' },
+      { name: 'NumPy / Pandas' },
     ],
   },
   {
-    category: 'Styling & Design',
+    category: 'Frontend',
     skills: [
-      { name: 'Tailwind CSS', level: 92 },
-      { name: 'CSS Architecture', level: 88 },
-      { name: 'Figma / Design Tools', level: 80 },
-      { name: 'Responsive Design', level: 95 },
+      { name: 'HTML5 / CSS3' },
+      { name: 'React / Next.js' },
+      { name: 'Tailwind CSS' },
     ],
   },
   {
-    category: 'Tools & Infrastructure',
+    category: 'Data & Tools',
     skills: [
-      { name: 'Git / GitHub', level: 90 },
-      { name: 'Vite / Webpack', level: 85 },
-      { name: 'Testing (Jest/Vitest)', level: 82 },
-      { name: 'CI/CD Pipelines', level: 78 },
-    ],
-  },
-  {
-    category: 'Architecture & Patterns',
-    skills: [
-      { name: 'Component Design', level: 92 },
-      { name: 'State Management', level: 88 },
-      { name: 'Performance Optimization', level: 85 },
-      { name: 'Accessibility (a11y)', level: 85 },
+      { name: 'SQL / PostgreSQL' },
+      { name: 'Supabase' },
+      { name: 'Git / GitHub' },
+      { name: 'Docker' },
+      { name: 'GitHub Actions' },
     ],
   },
 ];
@@ -415,10 +412,47 @@ export const hackathonsData = [
 
 export const navLinks = [
   { label: 'About', href: '#about' },
-  { label: 'AI Focus', href: '#frontend' },
-  { label: 'Skills', href: '#skills' },
   { label: 'Projects', href: '#projects' },
+  { label: 'Skills', href: '#skills' },
+  { label: 'Education', href: '#education' },
   { label: 'Experience', href: '#experience' },
   { label: 'Achievements', href: '#achievements' },
   { label: 'Contact', href: '#contact' },
+];
+
+export const educationData = [
+  {
+    degree: 'Bachelor of Science in Computer Science',
+    school: 'Your University Name',
+    location: 'Your City, Country',
+    period: '2022 — 2026 (Expected)',
+    gpa: 'X.XX / 4.00',
+    highlights: [
+      'Thesis: Blockchain-based sentiment analysis system',
+      'Relevant coursework: Data Structures, Algorithms, Machine Learning, Software Engineering, Database Systems',
+      'Active member of university tech/AI club',
+    ],
+    logo: '/education/university-logo.png',
+  },
+];
+
+export const testimonialsData = [
+  {
+    quote: 'Add a testimonial from a professor, mentor, teammate, or project collaborator here.',
+    name: 'Professor / Mentor Name',
+    role: 'Role, University or Company',
+    avatar: null,
+  },
+  {
+    quote: 'Add a testimonial from a teammate or classmate about your collaboration and technical skills.',
+    name: 'Teammate / Classmate Name',
+    role: 'Role, University or Company',
+    avatar: null,
+  },
+  {
+    quote: 'Add a testimonial from a hackathon partner, club advisor, or anyone who can vouch for your work.',
+    name: 'Collaborator Name',
+    role: 'Role, Organization',
+    avatar: null,
+  },
 ];

@@ -7,7 +7,7 @@ export default function Contact() {
   return (
     <Section
       id="contact"
-      label="07. Contact"
+      label="08. Contact"
       title="Get In Touch"
       subtitle="I'm currently open to new opportunities. Whether you have a question or just want to say hello, my inbox is always open."
     >

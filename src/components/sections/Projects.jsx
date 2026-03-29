@@ -130,7 +130,7 @@ export default function Projects() {
   return (
     <Section
       id="projects"
-      label="04. Projects"
+      label="02. Projects"
       title="Selected Work"
       subtitle="Case studies from projects I've built and shipped. Hover to pause, click to explore."
     >

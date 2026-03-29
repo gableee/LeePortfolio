@@ -251,6 +251,11 @@ export default function Achievements() {
       return a.name.localeCompare(b.name);
     });
 
+  const completedOrInProgress = filteredCerts.filter(
+    (cert) => cert.status === 'Completed' || cert.status === 'In Progress'
+  );
+  const plannedCerts = filteredCerts.filter((cert) => cert.status === 'Planned');
+
   return (
     <>
       <Section
@@ -298,14 +303,41 @@ export default function Achievements() {
                 No certifications found for this category yet.
               </div>
             ) : (
-              <div className="relative -mx-4 px-4 sm:mx-0 sm:px-0">
-                <div className="flex gap-3 overflow-x-auto pb-3 sm:gap-4 sm:pb-4">
-                  {filteredCerts.map((cert) => (
-                    <div key={cert.name} className="w-64 flex-shrink-0 sm:w-80">
-                      <CompactCertificationCard cert={cert} onClick={() => setSelectedCert(cert)} />
+              <div className="space-y-6 sm:space-y-8">
+                {/* Completed & In Progress */}
+                {completedOrInProgress.length > 0 && (
+                  <div>
+                    <div className="relative -mx-4 px-4 sm:mx-0 sm:px-0">
+                      <div className="flex gap-3 overflow-x-auto pb-3 sm:gap-4 sm:pb-4">
+                        {completedOrInProgress.map((cert) => (
+                          <div key={cert.name} className="w-64 flex-shrink-0 sm:w-80">
+                            <CompactCertificationCard cert={cert} onClick={() => setSelectedCert(cert)} />
+                          </div>
+                        ))}
+                      </div>
                     </div>
-                  ))}
-                </div>
+                  </div>
+                )}
+
+                {/* Currently Pursuing */}
+                {plannedCerts.length > 0 && (
+                  <div>
+                    <h4 className="mb-3 flex items-center gap-2 text-sm font-medium text-slate-500 dark:text-slate-dark sm:mb-4 sm:text-base">
+                      <span className="h-px flex-1 bg-gray-200/60 dark:bg-navy-600/60" />
+                      <span className="flex-shrink-0">Currently Pursuing</span>
+                      <span className="h-px flex-1 bg-gray-200/60 dark:bg-navy-600/60" />
+                    </h4>
+                    <div className="relative -mx-4 px-4 sm:mx-0 sm:px-0">
+                      <div className="flex gap-3 overflow-x-auto pb-3 sm:gap-4 sm:pb-4">
+                        {plannedCerts.map((cert) => (
+                          <div key={cert.name} className="w-64 flex-shrink-0 sm:w-80">
+                            <CompactCertificationCard cert={cert} onClick={() => setSelectedCert(cert)} />
+                          </div>
+                        ))}
+                      </div>
+                    </div>
+                  </div>
+                )}
               </div>
             )}
           </div>

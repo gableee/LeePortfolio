@@ -5,35 +5,44 @@ import {
   ReactIcon,
   TypeScriptIcon,
   JavaScriptIcon,
-  NextJsIcon,
   TailwindIcon,
   HTML5Icon,
-  CSS3Icon,
   GitIcon,
   FigmaIcon,
-  ViteIcon,
   NodeJsIcon,
-  JestIcon,
+  PythonIcon,
+  SolidityIcon,
+  SQLIcon,
+  JavaIcon,
+  SupabaseIcon,
+  FastAPIIcon,
+  PyTorchIcon,
+  DockerIcon,
+  ScikitLearnIcon,
+  DataIcon,
 } from '../icons';
 
 // Map technology names to their icon components
 const techIcons = {
-  'React / Next.js': { icon: ReactIcon, color: 'text-[#61DAFB]', gradient: 'from-[#61DAFB]/20 to-[#61DAFB]/5' },
-  'TypeScript': { icon: TypeScriptIcon, color: 'text-[#3178C6]', gradient: 'from-[#3178C6]/20 to-[#3178C6]/5' },
+  'Python': { icon: PythonIcon, color: 'text-[#3776AB]', gradient: 'from-[#3776AB]/20 to-[#3776AB]/5' },
   'JavaScript (ES2024)': { icon: JavaScriptIcon, color: 'text-[#F7DF1E]', gradient: 'from-[#F7DF1E]/20 to-[#F7DF1E]/5' },
+  'TypeScript': { icon: TypeScriptIcon, color: 'text-[#3178C6]', gradient: 'from-[#3178C6]/20 to-[#3178C6]/5' },
+  'SQL / PostgreSQL': { icon: SQLIcon, color: 'text-[#336791]', gradient: 'from-[#336791]/20 to-[#336791]/5' },
+  'Java': { icon: JavaIcon, color: 'text-[#ED8B00]', gradient: 'from-[#ED8B00]/20 to-[#ED8B00]/5' },
+  'React / Next.js': { icon: ReactIcon, color: 'text-[#61DAFB]', gradient: 'from-[#61DAFB]/20 to-[#61DAFB]/5' },
   'HTML5 / CSS3': { icon: HTML5Icon, color: 'text-[#E34F26]', gradient: 'from-[#E34F26]/20 to-[#E34F26]/5' },
   'Tailwind CSS': { icon: TailwindIcon, color: 'text-[#06B6D4]', gradient: 'from-[#06B6D4]/20 to-[#06B6D4]/5' },
-  'CSS Architecture': { icon: CSS3Icon, color: 'text-[#1572B6]', gradient: 'from-[#1572B6]/20 to-[#1572B6]/5' },
   'Figma / Design Tools': { icon: FigmaIcon, color: 'text-[#F24E1E]', gradient: 'from-[#F24E1E]/20 to-[#F24E1E]/5' },
-  'Responsive Design': { icon: HTML5Icon, color: 'text-[#E34F26]', gradient: 'from-[#E34F26]/20 to-[#E34F26]/5' },
+  'Node.js': { icon: NodeJsIcon, color: 'text-[#339933]', gradient: 'from-[#339933]/20 to-[#339933]/5' },
+  'FastAPI': { icon: FastAPIIcon, color: 'text-[#009688]', gradient: 'from-[#009688]/20 to-[#009688]/5' },
+  'Supabase': { icon: SupabaseIcon, color: 'text-[#3ECF8E]', gradient: 'from-[#3ECF8E]/20 to-[#3ECF8E]/5' },
+  'PyTorch': { icon: PyTorchIcon, color: 'text-[#EE4C2C]', gradient: 'from-[#EE4C2C]/20 to-[#EE4C2C]/5' },
+  'scikit-learn': { icon: ScikitLearnIcon, color: 'text-[#F7931E]', gradient: 'from-[#F7931E]/20 to-[#F7931E]/5' },
+  'NumPy / Pandas': { icon: DataIcon, color: 'text-[#4DABCF]', gradient: 'from-[#4DABCF]/20 to-[#4DABCF]/5' },
+  'Solidity': { icon: SolidityIcon, color: 'text-[#627EEA]', gradient: 'from-[#627EEA]/20 to-[#627EEA]/5' },
   'Git / GitHub': { icon: GitIcon, color: 'text-[#F05032]', gradient: 'from-[#F05032]/20 to-[#F05032]/5' },
-  'Vite / Webpack': { icon: ViteIcon, color: 'text-[#646CFF]', gradient: 'from-[#646CFF]/20 to-[#646CFF]/5' },
-  'Testing (Jest/Vitest)': { icon: JestIcon, color: 'text-[#C21325]', gradient: 'from-[#C21325]/20 to-[#C21325]/5' },
-  'CI/CD Pipelines': { icon: NodeJsIcon, color: 'text-[#339933]', gradient: 'from-[#339933]/20 to-[#339933]/5' },
-  'Component Design': { icon: ReactIcon, color: 'text-[#61DAFB]', gradient: 'from-[#61DAFB]/20 to-[#61DAFB]/5' },
-  'State Management': { icon: ReactIcon, color: 'text-[#61DAFB]', gradient: 'from-[#61DAFB]/20 to-[#61DAFB]/5' },
-  'Performance Optimization': { icon: ViteIcon, color: 'text-[#646CFF]', gradient: 'from-[#646CFF]/20 to-[#646CFF]/5' },
-  'Accessibility (a11y)': { icon: HTML5Icon, color: 'text-[#E34F26]', gradient: 'from-[#E34F26]/20 to-[#E34F26]/5' },
+  'Docker': { icon: DockerIcon, color: 'text-[#2496ED]', gradient: 'from-[#2496ED]/20 to-[#2496ED]/5' },
+  'GitHub Actions': { icon: GitIcon, color: 'text-[#2088FF]', gradient: 'from-[#2088FF]/20 to-[#2088FF]/5' },
 };
 
 export default function Skills() {
@@ -82,17 +91,7 @@ export default function Skills() {
                 <h3 className="mb-2 text-xl font-bold text-slate-800 dark:text-slate-light sm:mb-3 sm:text-2xl lg:text-4xl xl:text-5xl">
                   {selectedSkill.name}
                 </h3>
-                <div className="flex items-center gap-2 sm:gap-3">
-                  <div className="h-1 w-full max-w-[200px] overflow-hidden rounded-full bg-gray-200/60 dark:bg-navy-600/60 sm:h-1.5 sm:max-w-xs">
-                    <div
-                      className={`h-full rounded-full bg-gradient-to-r ${selectedSkill.color} shadow-lg transition-all duration-700 ease-out`}
-                      style={{ width: `${selectedSkill.level}%` }}
-                    />
-                  </div>
-                  <span className="font-mono text-xs font-semibold text-slate-600 dark:text-slate-dark sm:text-sm">
-                    {selectedSkill.level}%
-                  </span>
-                </div>
+
               </div>
             </div>
           </div>

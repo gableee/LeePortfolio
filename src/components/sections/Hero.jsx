@@ -92,9 +92,15 @@ export default function Hero() {
           <div className="w-full lg:flex-1">
             {/* Greeting - smaller on mobile */}
             <Reveal isInView={visible} delay={0} direction="none">
-              <p className="mb-3 font-mono text-xs text-accent dark:text-accent-light sm:mb-4 sm:text-sm">
-                {personalInfo.title}
-              </p>
+              <div className="mb-3 flex flex-wrap items-center gap-2 sm:mb-4 sm:gap-3">
+                <p className="font-mono text-xs text-accent dark:text-accent-light sm:text-sm">
+                  {personalInfo.title}
+                </p>
+                <span className="inline-flex items-center gap-1.5 rounded-full border border-emerald-200 bg-emerald-50 px-2.5 py-0.5 text-[10px] font-semibold text-emerald-700 dark:border-emerald-500/30 dark:bg-emerald-500/10 dark:text-emerald-400 sm:px-3 sm:py-1 sm:text-xs">
+                  <span className="h-1.5 w-1.5 animate-pulse rounded-full bg-emerald-500" />
+                  Open to Opportunities
+                </span>
+              </div>
             </Reveal>
 
             <Reveal isInView={visible} delay={50} direction="none">
@@ -132,6 +138,12 @@ export default function Hero() {
                   <Button href="#projects" size="lg" className="w-full rounded-full sm:w-auto">
                     View Case Studies
                     <ArrowRightIcon />
+                  </Button>
+                </MagneticWrapper>
+                <MagneticWrapper strength={0.08} className="w-full sm:w-auto">
+                  <Button href="/resume.pdf" variant="outline" size="lg" className="w-full rounded-full sm:w-auto" target="_blank" rel="noopener noreferrer">
+                    <svg className="h-4 w-4" viewBox="0 0 24 24" fill="none" stroke="currentColor" strokeWidth="2" strokeLinecap="round" strokeLinejoin="round"><path d="M21 15v4a2 2 0 0 1-2 2H5a2 2 0 0 1-2-2v-4"/><polyline points="7 10 12 15 17 10"/><line x1="12" y1="15" x2="12" y2="3"/></svg>
+                    Resume
                   </Button>
                 </MagneticWrapper>
                 <MagneticWrapper strength={0.08} className="w-full sm:w-auto">

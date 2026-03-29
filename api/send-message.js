@@ -4,25 +4,30 @@ export default async function handler(req, res) {
   }
 
   const resendApiKey = process.env.RESEND_API_KEY;
-  const toEmail = process.env.CONTACT_TO_EMAIL;
+  const toEmail = process.env.CONTACT_TO_EMAIL || '17leegab@gmail.com';
   const fromEmail = process.env.CONTACT_FROM_EMAIL;
 
-  if (!resendApiKey || !toEmail || !fromEmail) {
+  if (!resendApiKey || !fromEmail) {
     return res.status(500).json({ ok: false, error: 'Missing email configuration' });
   }
 
-  const sourcePath = req.body?.sourcePath || '/';
-  const pageUrl = req.body?.pageUrl || 'unknown';
-  const userAgent = req.headers['user-agent'] || 'unknown';
+  const name = (req.body?.name || '').slice(0, 100);
+  const email = (req.body?.email || '').slice(0, 200);
+  const subject = (req.body?.subject || 'Portfolio Contact').slice(0, 200);
+  const body = (req.body?.body || '').slice(0, 2000);
+  const pageUrl = (req.body?.pageUrl || 'unknown').slice(0, 500);
 
-  const subject = 'New portfolio quick-connect message';
+  if (!name.trim() || !email.trim() || !body.trim()) {
+    return res.status(400).json({ ok: false, error: 'Name, email, and message are required' });
+  }
+
   const text = [
-    'Someone clicked the direct-send message button on your portfolio.',
-    '',
-    `Path: ${sourcePath}`,
-    `URL: ${pageUrl}`,
-    `User-Agent: ${userAgent}`,
+    `From: ${name} <${email}>`,
+    `Page: ${pageUrl}`,
     `Timestamp (UTC): ${new Date().toISOString()}`,
+    '',
+    '--- Message ---',
+    body,
   ].join('\n');
 
   try {
@@ -35,8 +40,9 @@ export default async function handler(req, res) {
       body: JSON.stringify({
         from: fromEmail,
         to: [toEmail],
-        subject,
+        subject: `[Portfolio] ${subject}`,
         text,
+        reply_to: email.trim() || undefined,
       }),
     });
 

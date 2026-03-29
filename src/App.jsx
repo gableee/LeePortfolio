@@ -6,11 +6,12 @@ import NeuralNetwork from './components/effects/NeuralNetwork';
 import CommandPalette from './components/ui/CommandPalette';
 
 const About = lazy(() => import('./components/sections/About'));
-const FrontendFocus = lazy(() => import('./components/sections/FrontendFocus'));
 const Skills = lazy(() => import('./components/sections/Skills'));
 const Projects = lazy(() => import('./components/sections/Projects'));
+const Education = lazy(() => import('./components/sections/Education'));
 const Experience = lazy(() => import('./components/sections/Experience'));
 const Achievements = lazy(() => import('./components/sections/Achievements'));
+const Testimonials = lazy(() => import('./components/sections/Testimonials'));
 const Contact = lazy(() => import('./components/sections/Contact'));
 const ProjectDetail = lazy(() => import('./pages/ProjectDetail'));
 
@@ -30,19 +31,22 @@ function HomePage() {
         <About />
       </Suspense>
       <Suspense fallback={<SectionFallback />}>
-        <FrontendFocus />
+        <Projects />
       </Suspense>
       <Suspense fallback={<SectionFallback />}>
         <Skills />
       </Suspense>
       <Suspense fallback={<SectionFallback />}>
-        <Projects />
+        <Education />
       </Suspense>
       <Suspense fallback={<SectionFallback />}>
         <Experience />
       </Suspense>
       <Suspense fallback={<SectionFallback />}>
         <Achievements />
+      </Suspense>
+      <Suspense fallback={<SectionFallback />}>
+        <Testimonials />
       </Suspense>
       <Suspense fallback={<SectionFallback />}>
         <Contact />
