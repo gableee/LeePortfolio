@@ -1,7 +1,0 @@
-// File: src/components/icons.jsx
-
-// Only updating the VolumeOffIcon to be fully correct, but using replace_string_in_file is better for modification. 
-// However, the file seemed to be cut off or potentially corrupt at the end.
-// I will append the correct VolumeOffIcon if it's broken, or just rewrite the last part.
-
-// Let's read the last few lines again to be sure.

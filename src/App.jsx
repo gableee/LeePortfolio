@@ -2,8 +2,6 @@ import { lazy, Suspense } from 'react';
 import { BrowserRouter, Routes, Route } from 'react-router-dom';
 import Layout from './components/layout/Layout';
 import Hero from './components/sections/Hero';
-import NeuralNetwork from './components/effects/NeuralNetwork';
-import CommandPalette from './components/ui/CommandPalette';
 
 const About = lazy(() => import('./components/sections/About'));
 const Skills = lazy(() => import('./components/sections/Skills'));
@@ -11,7 +9,6 @@ const Projects = lazy(() => import('./components/sections/Projects'));
 const Education = lazy(() => import('./components/sections/Education'));
 const Experience = lazy(() => import('./components/sections/Experience'));
 const Achievements = lazy(() => import('./components/sections/Achievements'));
-const Testimonials = lazy(() => import('./components/sections/Testimonials'));
 const Contact = lazy(() => import('./components/sections/Contact'));
 const ProjectDetail = lazy(() => import('./pages/ProjectDetail'));
 
@@ -46,9 +43,6 @@ function HomePage() {
         <Achievements />
       </Suspense>
       <Suspense fallback={<SectionFallback />}>
-        <Testimonials />
-      </Suspense>
-      <Suspense fallback={<SectionFallback />}>
         <Contact />
       </Suspense>
     </Layout>
@@ -58,8 +52,6 @@ function HomePage() {
 function App() {
   return (
     <BrowserRouter>
-      <NeuralNetwork />
-      <CommandPalette />
       <Routes>
         <Route path="/" element={<HomePage />} />
         <Route

@@ -136,7 +136,7 @@ export default function Projects() {
     >
       {/* Full-width continuous carousel - mobile-first margins */}
       <div className="-mx-4 sm:-mx-6 lg:-mx-8">
-        <Carousel autoPlay={true} pauseOnHover={true}>
+        <Carousel autoPlay={false} pauseOnHover={true}>
           {projectsData.map((project, index) => (
             <ProjectCarouselCard 
               key={project.slug} 

@@ -435,24 +435,3 @@ export const educationData = [
     logo: '/education/university-logo.png',
   },
 ];
-
-export const testimonialsData = [
-  {
-    quote: 'Add a testimonial from a professor, mentor, teammate, or project collaborator here.',
-    name: 'Professor / Mentor Name',
-    role: 'Role, University or Company',
-    avatar: null,
-  },
-  {
-    quote: 'Add a testimonial from a teammate or classmate about your collaboration and technical skills.',
-    name: 'Teammate / Classmate Name',
-    role: 'Role, University or Company',
-    avatar: null,
-  },
-  {
-    quote: 'Add a testimonial from a hackathon partner, club advisor, or anyone who can vouch for your work.',
-    name: 'Collaborator Name',
-    role: 'Role, Organization',
-    avatar: null,
-  },
-];

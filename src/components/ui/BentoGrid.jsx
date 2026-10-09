@@ -1,5 +1,4 @@
 import { cn } from '../../utils/cn';
-import TiltCard from '../effects/TiltCard';
 
 export default function BentoGrid({ children, className }) {
   return (
@@ -20,7 +19,6 @@ export function BentoItem({
   colSpan = 6,
   rowSpan = 1,
   variant = 'default',
-  tilt = true,
   ...props 
 }) {
   const colSpanClasses = {
@@ -57,14 +55,6 @@ export function BentoItem({
       {children}
     </div>
   );
-
-  if (tilt) {
-    return (
-      <TiltCard className={cn(colSpanClasses[colSpan], rowSpanClasses[rowSpan])}>
-        {content}
-      </TiltCard>
-    );
-  }
 
   return content;
 }

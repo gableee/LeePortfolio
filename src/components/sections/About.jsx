@@ -1,6 +1,5 @@
 import { Section } from '../ui';
 import { aboutData, skillsData } from '../../data/portfolio';
-import { TiltCard } from '../effects';
 
 // Icons for the bento items
 const CodeIcon = () => (
@@ -38,8 +37,7 @@ export default function About() {
       {/* Bento Grid Layout - Mobile-first with min-height to prevent collapse */}
       <div className="grid gap-3 sm:gap-4 sm:grid-cols-2 lg:grid-cols-12 lg:auto-rows-[minmax(180px,auto)]">
         {/* Main intro - Large card */}
-        <TiltCard 
-          tiltAmount={2}
+        <div 
           className="overflow-hidden rounded-xl border border-gray-200/60 bg-white p-4 dark:border-navy-600/60 dark:bg-navy-700 sm:col-span-2 sm:rounded-2xl sm:p-6 lg:col-span-7 lg:row-span-2"
         >
           <div className="flex h-full flex-col justify-between">
@@ -60,13 +58,12 @@ export default function About() {
               </div>
             </div>
           </div>
-        </TiltCard>
+        </div>
 
         {/* Stats cards - Mobile: side by side, Desktop: stacked right */}
         {aboutData.highlights.map((item, index) => (
-          <TiltCard
+          <div
             key={item.label}
-            tiltAmount={3}
             className="group overflow-hidden rounded-xl border border-gray-200/60 bg-gradient-to-br from-white to-slate-50 p-3.5 dark:border-navy-600/60 dark:from-navy-700 dark:to-navy-800 sm:rounded-2xl sm:p-5 lg:col-span-5"
           >
             <div className="flex h-full flex-col justify-between gap-3 sm:gap-0">
@@ -91,12 +88,11 @@ export default function About() {
                 </div>
               </div>
             </div>
-          </TiltCard>
+          </div>
         ))}
 
         {/* Skills preview - Wide card */}
-        <TiltCard
-          tiltAmount={2}
+        <div
           className="overflow-hidden rounded-xl border border-gray-200/60 bg-white p-3.5 dark:border-navy-600/60 dark:bg-navy-700 sm:col-span-2 sm:rounded-2xl sm:p-5 lg:col-span-7"
         >
           <div className="flex h-full flex-col">
@@ -128,11 +124,10 @@ export default function About() {
               ))}
             </div>
           </div>
-        </TiltCard>
+        </div>
 
         {/* Interactive element - Accent card */}
-        <TiltCard
-          tiltAmount={3}
+        <div
           className="group overflow-hidden rounded-xl border border-accent/20 bg-gradient-to-br from-accent/5 via-violet-500/5 to-accent-light/5 p-3.5 dark:border-accent-light/20 sm:col-span-2 sm:rounded-2xl sm:p-5 lg:col-span-5"
         >
           <div className="flex h-full flex-col justify-between gap-3 sm:gap-0">
@@ -157,7 +152,7 @@ export default function About() {
               </a>
             </div>
           </div>
-        </TiltCard>
+        </div>
       </div>
     </Section>
   );

@@ -1,10 +1,9 @@
-import { useEffect, useMemo, useState } from 'react';
+import { useEffect, useState } from 'react';
 import { personalInfo } from '../../data/portfolio';
 import { useInView } from '../../hooks/useInView';
 import Button from '../ui/Button';
 import { AvatarPlaceholder } from '../ui/Placeholder';
 import { ArrowRightIcon, GitHubIcon, LinkedInIcon } from '../icons';
-import { useTextScramble, MagneticWrapper, TiltCard } from '../effects';
 
 function Reveal({ children, delay = 0, isInView, direction = 'up' }) {
   const transforms = {
@@ -32,11 +31,6 @@ export default function Hero() {
   const [prefersReducedMotion, setPrefersReducedMotion] = useState(false);
   const [hasPhotoError, setHasPhotoError] = useState(false);
 
-  const initials = useMemo(() => {
-    const parts = personalInfo.name.trim().split(/\s+/).slice(0, 2);
-    return parts.map((part) => part[0]?.toUpperCase() || '').join('') || 'YN';
-  }, []);
-
   useEffect(() => {
     const mediaQuery = window.matchMedia('(prefers-reduced-motion: reduce)');
     const syncPreference = () => setPrefersReducedMotion(mediaQuery.matches);
@@ -46,12 +40,6 @@ export default function Hero() {
   }, []);
 
   const visible = prefersReducedMotion ? true : isInView;
-
-  // Text scramble for name
-  const { displayText: scrambledName } = useTextScramble(
-    personalInfo.name,
-    { duration: 650, delay: visible ? 250 : 99999, revealDirection: 'start' }
-  );
 
   return (
     <section
@@ -109,10 +97,10 @@ export default function Hero() {
               </p>
             </Reveal>
 
-            {/* Name with scramble effect - responsive sizing with proper wrapping */}
+            {/* Name - responsive sizing with proper wrapping */}
             <Reveal isInView={visible} delay={100}>
               <h1 className="break-words text-3xl font-bold text-slate-900 dark:text-slate-light sm:text-4xl md:text-5xl lg:text-display">
-                <span className="font-mono">{visible ? scrambledName : personalInfo.name}</span>
+                <span className="font-mono">{personalInfo.name}</span>
                 <span className="text-gradient">.</span>
               </h1>
             </Reveal>
@@ -131,26 +119,26 @@ export default function Hero() {
               </p>
             </Reveal>
 
-            {/* CTAs with magnetic effect - full width buttons on mobile */}
+            {/* CTAs - full width buttons on mobile */}
             <Reveal isInView={visible} delay={400}>
               <div className="mt-6 flex flex-col gap-3 sm:mt-8 sm:flex-row sm:flex-wrap sm:items-center sm:gap-4">
-                <MagneticWrapper strength={0.08} className="w-full sm:w-auto">
+                <div className="w-full sm:w-auto">
                   <Button href="#projects" size="lg" className="w-full rounded-full sm:w-auto">
                     View Case Studies
                     <ArrowRightIcon />
                   </Button>
-                </MagneticWrapper>
-                <MagneticWrapper strength={0.08} className="w-full sm:w-auto">
+                </div>
+                <div className="w-full sm:w-auto">
                   <Button href="/resume.pdf" variant="outline" size="lg" className="w-full rounded-full sm:w-auto" target="_blank" rel="noopener noreferrer">
                     <svg className="h-4 w-4" viewBox="0 0 24 24" fill="none" stroke="currentColor" strokeWidth="2" strokeLinecap="round" strokeLinejoin="round"><path d="M21 15v4a2 2 0 0 1-2 2H5a2 2 0 0 1-2-2v-4"/><polyline points="7 10 12 15 17 10"/><line x1="12" y1="15" x2="12" y2="3"/></svg>
                     Resume
                   </Button>
-                </MagneticWrapper>
-                <MagneticWrapper strength={0.08} className="w-full sm:w-auto">
+                </div>
+                <div className="w-full sm:w-auto">
                   <Button href="#contact" variant="outline" size="lg" className="w-full rounded-full sm:w-auto">
                     Contact Me
                   </Button>
-                </MagneticWrapper>
+                </div>
               </div>
             </Reveal>
 
@@ -182,7 +170,7 @@ export default function Hero() {
           {/* Profile visual - hidden on very small screens, shown from sm up */}
           <Reveal isInView={visible} delay={250} direction="right">
             <div className="mx-auto w-full max-w-xs sm:max-w-sm lg:w-80 lg:flex-shrink-0">
-              <TiltCard tiltAmount={3} className="relative overflow-hidden rounded-2xl border border-gray-200/70 bg-white p-4 shadow-xl shadow-slate-300/20 dark:border-navy-600/70 dark:bg-navy-700 dark:shadow-navy-900/40 sm:rounded-3xl sm:p-6">
+              <div className="relative overflow-hidden rounded-2xl border border-gray-200/70 bg-white p-4 shadow-xl shadow-slate-300/20 dark:border-navy-600/70 dark:bg-navy-700 dark:shadow-navy-900/40 sm:rounded-3xl sm:p-6">
                 <div className="absolute -right-12 -top-12 h-28 w-28 rounded-full bg-accent/10 blur-2xl dark:bg-accent-light/10 sm:-right-16 sm:-top-16 sm:h-40 sm:w-40" />
 
                 {/* Profile image with proper placeholder */}
@@ -204,7 +192,7 @@ export default function Hero() {
                   <p className="text-xs font-medium text-slate-500 dark:text-slate-dark sm:text-sm">Based in {personalInfo.location}</p>
                   <p className="mt-1 text-xs text-slate-600 dark:text-slate sm:text-sm">Open to AI engineering opportunities and impactful collaborations.</p>
                 </div>
-              </TiltCard>
+              </div>
             </div>
           </Reveal>
         </div>
