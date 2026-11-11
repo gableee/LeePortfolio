@@ -20,7 +20,8 @@ export default function Hero({ commits }) {
           </div>
           <p className="lede">{profile.lede}</p>
           <div className="ctas">
-            <a className="pen solid" href={profile.resume}>Download résumé</a>
+            <a className="pen solid" href={profile.resume} target="_blank" rel="noopener noreferrer">View résumé</a>
+            <a className="pen" href={profile.cv} target="_blank" rel="noopener noreferrer">Full CV</a>
             <a className="pen" href={`mailto:${profile.email}`}>Email me</a>
             <a className="pen" href={profile.githubUrl}>GitHub</a>
             <a className="pen" href={profile.linkedin}>LinkedIn</a>
