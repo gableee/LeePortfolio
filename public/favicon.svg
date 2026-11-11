@@ -1,4 +1,5 @@
-<svg xmlns="http://www.w3.org/2000/svg" viewBox="0 0 32 32" fill="none">
-  <rect width="32" height="32" rx="6" fill="#0a192f"/>
-  <text x="50%" y="55%" dominant-baseline="middle" text-anchor="middle" font-family="monospace" font-weight="700" font-size="18" fill="#06b6d4">&lt;/&gt;</text>
+<svg xmlns="http://www.w3.org/2000/svg" viewBox="0 0 32 32">
+  <rect width="32" height="32" rx="7" fill="#F1F4F0"/>
+  <path d="M7 4v24" stroke="#C23B2E" stroke-width="2" opacity=".6"/>
+  <text x="19" y="22" text-anchor="middle" font-family="Poppins, system-ui, sans-serif" font-weight="700" font-size="15" fill="#17202F">LG</text>
 </svg>
