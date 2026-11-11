@@ -9,7 +9,10 @@ function Links({ home }) {
       <a className="pen" href={profile.linkedin}>LinkedIn</a>
       <a className="pen" href={profile.githubUrl}>GitHub</a>
       {home
-        ? <a className="pen" href={profile.resume}>Résumé</a>
+        ? <>
+            <a className="pen" href={profile.resume} target="_blank" rel="noopener noreferrer">Résumé</a>
+            <a className="pen" href={profile.cv} target="_blank" rel="noopener noreferrer">Full CV</a>
+          </>
         : <Link className="pen" to="/">Back to home</Link>}
     </div>
   );

@@ -6,6 +6,7 @@ export const profile = {
   githubUrl: 'https://github.com/gableee',
   linkedin: 'https://www.linkedin.com/in/lee-gabriel-isidro-7a2b1333b',
   resume: '/Lee_Gabriel_Isidro_Resume.pdf',
+  cv: '/Lee_Gabriel_Isidro_CV.pdf',
   photo: '/me.jpg',
   lede: 'Fourth-year Computer Science student who designs, builds and ships full-stack software, and is now bringing machine learning into it.',
 };
