@@ -1,70 +1,44 @@
-import { lazy, Suspense } from 'react';
-import { BrowserRouter, Routes, Route } from 'react-router-dom';
-import Layout from './components/layout/Layout';
-import Hero from './components/sections/Hero';
+import { lazy, Suspense, useEffect } from 'react';
+import { BrowserRouter, Navigate, Route, Routes, useLocation } from 'react-router-dom';
+import LightboxProvider from './components/Lightbox';
+import Home from './pages/Home';
 
-const About = lazy(() => import('./components/sections/About'));
-const Skills = lazy(() => import('./components/sections/Skills'));
-const Projects = lazy(() => import('./components/sections/Projects'));
-const Education = lazy(() => import('./components/sections/Education'));
-const Experience = lazy(() => import('./components/sections/Experience'));
-const Achievements = lazy(() => import('./components/sections/Achievements'));
-const Contact = lazy(() => import('./components/sections/Contact'));
-const ProjectDetail = lazy(() => import('./pages/ProjectDetail'));
+// story pages load on demand; the home page is what recruiters see first
+const VoteX = lazy(() => import('./pages/VoteX'));
+const Liwanag = lazy(() => import('./pages/Liwanag'));
 
-function SectionFallback() {
-  return (
-    <div className="flex items-center justify-center py-20">
-      <div className="h-8 w-8 animate-spin rounded-full border-2 border-accent border-t-transparent" />
-    </div>
-  );
+// On a route change: jump to the #section if there is one, otherwise to the top.
+function ScrollManager() {
+  const { pathname, hash } = useLocation();
+  useEffect(() => {
+    if (!hash) { window.scrollTo(0, 0); return; }
+    const id = decodeURIComponent(hash.slice(1));
+    let tries = 0, raf;
+    const go = () => {
+      const el = document.getElementById(id);
+      if (el) el.scrollIntoView();
+      else if (tries++ < 60) raf = requestAnimationFrame(go); // lazy page still loading
+    };
+    go();
+    return () => cancelAnimationFrame(raf);
+  }, [pathname, hash]);
+  return null;
 }
 
-function HomePage() {
-  return (
-    <Layout>
-      <Hero />
-      <Suspense fallback={<SectionFallback />}>
-        <About />
-      </Suspense>
-      <Suspense fallback={<SectionFallback />}>
-        <Projects />
-      </Suspense>
-      <Suspense fallback={<SectionFallback />}>
-        <Skills />
-      </Suspense>
-      <Suspense fallback={<SectionFallback />}>
-        <Education />
-      </Suspense>
-      <Suspense fallback={<SectionFallback />}>
-        <Experience />
-      </Suspense>
-      <Suspense fallback={<SectionFallback />}>
-        <Achievements />
-      </Suspense>
-      <Suspense fallback={<SectionFallback />}>
-        <Contact />
-      </Suspense>
-    </Layout>
-  );
-}
-
-function App() {
+export default function App() {
   return (
     <BrowserRouter>
-      <Routes>
-        <Route path="/" element={<HomePage />} />
-        <Route
-          path="/project/:slug"
-          element={
-            <Suspense fallback={<SectionFallback />}>
-              <ProjectDetail />
-            </Suspense>
-          }
-        />
-      </Routes>
+      <ScrollManager />
+      <LightboxProvider>
+        <Suspense fallback={<div style={{ minHeight: '100vh' }} />}>
+          <Routes>
+            <Route path="/" element={<Home />} />
+            <Route path="/votex" element={<VoteX />} />
+            <Route path="/liwanag" element={<Liwanag />} />
+            <Route path="*" element={<Navigate to="/" replace />} />
+          </Routes>
+        </Suspense>
+      </LightboxProvider>
     </BrowserRouter>
   );
 }
-
-export default App;

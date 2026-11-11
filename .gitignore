@@ -27,3 +27,13 @@ dist-ssr
 .env
 .env.*
 !.env.example
+
+# Raw source material (not used by the site; Vids has unblurred meeting screenshots)
+/Vids/
+/Cert/
+/Coursera/
+/design-concepts/
+/figures/
+/2X2.jpg
+/RESUME.jfif
+/Lee_Gabriel_Isidro_Resume.pdf
