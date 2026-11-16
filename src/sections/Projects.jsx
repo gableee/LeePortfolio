@@ -130,7 +130,7 @@ function Fraud() {
   );
 }
 
-function Eryysyn() {
+function Eryysyn({ roadmap }) {
   return (
     <article className="feat" id="eryysyn">
       <div className="vx-head">
@@ -142,15 +142,16 @@ function Eryysyn() {
         <a className="pen" href={eryysyn.repo}>Follow the build</a>
       </div>
       <ol className="phases">
-        {eryysyn.phases.map((p, i) => {
-          const state = i < eryysyn.current ? 'done' : i === eryysyn.current ? 'now' : undefined;
-          return (
-            <li key={p} className={state} aria-current={state === 'now' ? 'step' : undefined}>
-              <span className="n">{i}</span><b>{p}</b>{state === 'now' && <em>in progress</em>}
-            </li>
-          );
-        })}
+        {roadmap.phases.map(p => (
+          <li key={p.n} className={p.state} aria-current={p.state === 'now' ? 'step' : undefined} title={p.status}>
+            <span className="n">{p.n}</span><b>{p.name}</b>
+            {p.state === 'now' && <em>in progress</em>}
+            {p.state === 'skipped' && <em>folded into phase 3</em>}
+          </li>
+        ))}
       </ol>
+      {roadmap.note && <p className="phase-note"><b>Latest:</b> {roadmap.note}</p>}
+      <p className="phase-src">Progress is read live from the project's <a href={eryysyn.roadmap}>roadmap notes</a>{roadmap.live ? '' : ' (showing the last saved copy)'}.</p>
     </article>
   );
 }
@@ -173,12 +174,12 @@ function More() {
         <div className="body">
           <p className="label">SiKAPTala 2026 · Top 10 of 70+ teams</p>
           <h3>AGAPAY</h3>
-          <p>A medication companion app our team extended in a five-day national hackathon.</p>
+          <p>A medication companion app our team enhanced in a five-day national hackathon. I shaped the feature plan and aligned it with the competition theme.</p>
           <button className="linkbtn go" onClick={() => open(certItem(hackathonCert))}>View certificate</button>
         </div>
       </div>
       <div className="smaller">
-        <h4>Smaller builds</h4>
+        <h4>Also built</h4>
         <ul>
           {smaller.map(s => (
             <li key={s.name}>
@@ -192,7 +193,7 @@ function More() {
   );
 }
 
-export default function Projects() {
+export default function Projects({ roadmap }) {
   return (
     <section id="projects" className="sec">
       <div className="sec-head">
@@ -201,7 +202,7 @@ export default function Projects() {
       </div>
       <VoteX />
       <Fraud />
-      <Eryysyn />
+      <Eryysyn roadmap={roadmap} />
       <More />
     </section>
   );

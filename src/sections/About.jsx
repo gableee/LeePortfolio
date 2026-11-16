@@ -28,7 +28,7 @@ export default function About() {
         <h3>Outside the classroom</h3>
         <div className="beyond-row">
           {beyond.map(b => (
-            <div className="card" key={b.title}><p className="label">{b.when}</p><h4>{b.url ? <a className="plain-link" href={b.url} target="_blank" rel="noopener noreferrer">{b.title}</a> : b.title}</h4><p>{b.text}</p></div>
+            <div className="card" key={b.title}><p className="label">{b.when}</p><h4>{b.url ? <a className="plain-link" href={b.url} target="_blank" rel="noopener noreferrer">{b.title}</a> : b.title}</h4><ul className="points">{b.points.map(p => <li key={p}>{p}</li>)}</ul></div>
           ))}
         </div>
       </div>

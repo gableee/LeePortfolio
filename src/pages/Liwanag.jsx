@@ -15,7 +15,7 @@ const FACTS = [
   ['Track', 'Smart Environment'],
   ['My role', 'Front-end developer, team of 3'],
   ['When', 'Oct 2025'],
-  ['Result', 'Qualified, of 22 entries'],
+  ['Result', 'Finalist: 1 of 10 teams (of 22) selected to present'],
 ];
 
 const DRILL = [

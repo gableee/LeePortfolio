@@ -22,7 +22,7 @@ export const levels = [
     ],
   },
   {
-    name: 'Learning', dots: 1, sub: 'Studying and practising now',
+    name: 'Working knowledge', dots: 1, sub: 'Applied in projects and coursework, building depth',
     items: [
       { name: 'NumPy and pandas', icon: 'pandas', where: 'Fraud detection EDA' },
       { name: 'scikit-learn and XGBoost', icon: 'scikitlearn', where: 'Fraud detection model' },

@@ -1,13 +1,12 @@
 import { levels, tools } from '../data/skills';
 import Logo from '../components/Logo';
-import Todo from '../components/Todo';
 
 export default function Skills() {
   return (
     <section id="skills" className="sec">
       <div className="sec-head">
         <h2>Skills</h2>
-        <p className="intro">Grouped by how much I've actually used them, with the project where each one was used. <Todo>Placement is a draft.</Todo></p>
+        <p className="intro">Grouped by how much I've used them, with the project where each one was used.</p>
       </div>
       <div className="levels">
         {levels.map(lv => (

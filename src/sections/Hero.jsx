@@ -9,7 +9,8 @@ function LatestCommit({ commits }) {
   return <span className="now-commit">Latest commit: <a href={c.url}>{c.msg}</a> · {ago(c.when)}</span>;
 }
 
-export default function Hero({ commits }) {
+export default function Hero({ commits, roadmap }) {
+  const now = roadmap.now;
   return (
     <>
       <header className="hero">
@@ -31,7 +32,7 @@ export default function Hero({ commits }) {
           <h4><span className="live-dot" aria-hidden="true" />Right now</h4>
           <dl>
             <dt>Building</dt>
-            <dd><b>Eryysyn</b>, an AI research platform that will answer questions from your own documents, with citations. <a href="#eryysyn">Phase 1 of 9</a>.<LatestCommit commits={commits} /></dd>
+            <dd><b>Eryysyn</b>, an AI research platform that answers questions from your own documents, with citations. {now && <>Now on <a href="#eryysyn">phase {now.n} of {roadmap.last}: {now.name}</a>.</>}<LatestCommit commits={commits} /></dd>
             <dt>Looking for</dt>
             <dd>An ML / AI engineering internship (OJT), or a full-stack role. <b>Available from December 2026</b>, remote or on-site.</dd>
             <dt>Based in</dt>

@@ -4,17 +4,21 @@ import { useEffect, useState } from 'react';
 //   heatmap → github-contributions-api.jogruber.de (reads the public profile calendar; private
 //             contributions appear only as anonymous counts if enabled on the profile)
 //   commits → api.github.com public events (official API, 60 requests/hour per visitor IP)
-// Responses are cached in sessionStorage for 10 minutes so reloads don't burn the rate limit.
-const TTL = 10 * 60 * 1000;
+// Kept fresh while the page is open: re-checked every 3 minutes and whenever the tab regains focus.
+// Responses are cached in sessionStorage for 2 minutes so quick reloads don't burn the rate limit.
+// The calendar service caches GitHub's graph on its side too, so new commits can take a while to show.
+const TTL = 2 * 60 * 1000;
+const POLL = 3 * 60 * 1000;
+const FOREVER = 7 * 24 * 60 * 60 * 1000; // a commit's message never changes
 
-async function cached(key, url) {
+export async function cached(key, url, ttl = TTL, as = 'json') {
   try {
     const hit = JSON.parse(sessionStorage.getItem(key));
-    if (hit && Date.now() - hit.t < TTL) return hit.v;
+    if (hit && Date.now() - hit.t < ttl) return hit.v;
   } catch { /* storage blocked or empty */ }
-  const r = await fetch(url, { headers: { Accept: 'application/json' } });
+  const r = await fetch(url, as === 'json' ? { headers: { Accept: 'application/json' } } : undefined);
   if (!r.ok) throw new Error(String(r.status));
-  const v = await r.json();
+  const v = as === 'json' ? await r.json() : await r.text();
   try { sessionStorage.setItem(key, JSON.stringify({ t: Date.now(), v })); } catch { /* full or blocked */ }
   return v;
 }
@@ -80,7 +84,7 @@ async function loadCommits(user) {
   const top = await Promise.all(items.slice(0, 6).map(async c => {
     if (c.msg) return c;
     try {
-      const d = await cached('gh-c:' + c.sha, `https://api.github.com/repos/${c.repo}/commits/${c.sha}`);
+      const d = await cached('gh-c:' + c.sha, `https://api.github.com/repos/${c.repo}/commits/${c.sha}`, FOREVER);
       return { ...c, msg: d.commit.message.split('\n')[0] };
     } catch {
       return { ...c, msg: c.fallback };
@@ -91,18 +95,28 @@ async function loadCommits(user) {
     .sort((a, b) => new Date(b.when) - new Date(a.when));
 }
 
-// calendar / commits: undefined while loading, 'error' on failure, otherwise data
+// calendar / commits: undefined while loading, 'error' on failure, otherwise data.
+// A failed refresh keeps the last good data on screen. updated = time of the last good load.
 export default function useGitHub(user) {
   const [calendar, setCalendar] = useState();
   const [commits, setCommits] = useState();
+  const [updated, setUpdated] = useState();
   useEffect(() => {
     let live = true;
-    cached('gh-cal:' + user, `https://github-contributions-api.jogruber.de/v4/${encodeURIComponent(user)}?y=last`)
-      .then(shapeCalendar)
-      .then(v => live && setCalendar(v), () => live && setCalendar('error'));
-    loadCommits(user)
-      .then(v => live && setCommits(v), () => live && setCommits('error'));
-    return () => { live = false; };
+    const keep = set => () => live && set(prev => (prev && prev !== 'error' ? prev : 'error'));
+    const load = () => {
+      cached('gh-cal:' + user, `https://github-contributions-api.jogruber.de/v4/${encodeURIComponent(user)}?y=last`)
+        .then(shapeCalendar)
+        .then(v => { if (live) { setCalendar(v); setUpdated(Date.now()); } }, keep(setCalendar));
+      loadCommits(user)
+        .then(v => live && setCommits(v), keep(setCommits));
+    };
+    const visible = () => document.visibilityState === 'visible';
+    const onShow = () => { if (visible()) load(); };
+    load();
+    const timer = setInterval(() => { if (visible()) load(); }, POLL);
+    document.addEventListener('visibilitychange', onShow);
+    return () => { live = false; clearInterval(timer); document.removeEventListener('visibilitychange', onShow); };
   }, [user]);
-  return { calendar, commits };
+  return { calendar, commits, updated };
 }

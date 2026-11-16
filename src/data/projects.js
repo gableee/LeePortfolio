@@ -58,14 +58,26 @@ export const fraud = {
 
 export const eryysyn = {
   repo: 'https://github.com/gableee/eryysyn',
+  // live progress comes from the roadmap table in this file (see src/lib/useEryysyn.js)
+  roadmap: 'https://github.com/gableee/eryysyn/blob/main/docs/CONTEXT.md',
+  roadmapRaw: 'https://raw.githubusercontent.com/gableee/eryysyn/main/docs/CONTEXT.md',
   label: 'AI engineering project · since Nov 2026',
-  line: "An AI-powered knowledge and research platform that will answer questions grounded in your own documents, with citations. I'm building it in nine phases, implementing each layer myself instead of leaning only on high-level frameworks.",
-  current: 1,
-  phases: ['Product and architecture', 'Full-stack foundation', 'LLM integration', 'RAG from scratch', 'Evaluation and reliability', 'LangChain comparison', 'Web research', 'LangGraph agents', 'Production and MLOps'],
+  line: "An AI-powered knowledge and research platform that answers questions grounded in your own documents, with citations. I'm building it in nine phases, implementing each layer myself instead of leaning only on high-level frameworks.",
+  // fallback while the live roadmap loads (or if it can't be read)
+  note: 'Extraction, chunking, embeddings, chunks table, retrieval, and generation with citations all work end to end through the API.',
+  phases: [
+    { n: 0, name: 'Product and architecture', status: 'Done', state: 'done' },
+    { n: 1, name: 'Full-stack foundation', status: 'Done enough for MVP', state: 'done' },
+    { n: 2, name: 'LLM integration', status: 'Skipped on purpose, learned inside RAG flow', state: 'skipped' },
+    { n: 3, name: 'RAG from scratch', status: 'In progress', state: 'now' },
+    { n: 4, name: 'Evaluation, reliability, trust', status: 'Not started', state: 'planned' },
+    { n: 5, name: 'LangChain', status: 'Not started', state: 'planned' },
+    { n: 6, name: 'External web research', status: 'Not started', state: 'planned' },
+    { n: 7, name: 'LangGraph and agents', status: 'Not started', state: 'planned' },
+    { n: 8, name: 'Production and MLOps', status: 'Not started', state: 'planned' },
+  ],
 };
 
 export const smaller = [
-  { name: 'PracticeYOLO', url: 'https://github.com/gableee/PracticeYOLO', text: 'Counting cars in video with YOLOv8n and cvzone', meta: 'Python · 2026' },
   { name: 'Studystreak', url: 'https://github.com/gableee/Studystreak', text: 'A study app I built for Software Engineering 1. Upload a PDF, slide deck or document, and an AI service turns it into summaries, quizzes and flashcards. Also has a Pomodoro timer that saves each session. I stopped building it after the course', meta: 'React · Python · Sept–Nov 2025 · course prototype' },
-  { name: 'Josephus Calculator', url: 'https://github.com/gableee/JosephusCalcu', text: 'Algorithms course final project', meta: 'Java · 2025' },
 ];

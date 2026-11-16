@@ -1,4 +1,4 @@
-import { useEffect, useRef } from 'react';
+import { useEffect, useRef, useState } from 'react';
 import { profile } from '../data/profile';
 import { ago } from '../lib/useGitHub';
 
@@ -6,7 +6,15 @@ const Failed = ({ what }) => (
   <p className="gh-empty">Couldn't load {what} right now. <a href={profile.githubUrl}>See it on GitHub</a>.</p>
 );
 
-function Calendar({ data }) {
+// "Live · checked 2 minutes ago", re-rendered every 30 seconds so the time stays right
+function Checked({ at }) {
+  const [, tick] = useState(0);
+  useEffect(() => { const t = setInterval(() => tick(n => n + 1), 30000); return () => clearInterval(t); }, []);
+  if (!at) return null;
+  return <span className="gh-live"><i className="live-dot" aria-hidden="true" />Live · checked {ago(at)}</span>;
+}
+
+function Calendar({ data, updated }) {
   const scroller = useRef(null);
   // on small screens the grid scrolls sideways: start at the newest weeks
   useEffect(() => { const s = scroller.current; if (s && data && data !== 'error') s.scrollLeft = s.scrollWidth; }, [data]);
@@ -25,7 +33,7 @@ function Calendar({ data }) {
   );
   return (
     <div className="card gh-cal">
-      <div className="gh-top"><span className="mono">&gt;_ github.com/{profile.github}</span><a className="pen" href={profile.githubUrl}>View profile</a></div>
+      <div className="gh-top"><span className="mono">&gt;_ github.com/{profile.github}</span><Checked at={updated} /><a className="pen" href={profile.githubUrl}>View profile</a></div>
       {data && data !== 'error' && (
         <dl className="gh-stats">
           <div><dt>Contributions</dt><dd>{data.total.toLocaleString()}</dd><span>in the last year</span></div>
@@ -59,15 +67,15 @@ function Feed({ commits }) {
   );
 }
 
-export default function GitHubActivity({ calendar, commits }) {
+export default function GitHubActivity({ calendar, commits, updated }) {
   return (
     <section id="github" className="sec">
       <div className="sec-head">
         <h2>On GitHub</h2>
-        <p className="intro">Live from my public GitHub profile: contributions over the past year and my latest commits.</p>
+        <p className="intro">Live from my public GitHub profile: contributions over the past year and my latest commits, refreshed every few minutes.</p>
       </div>
       <div className="gh">
-        <Calendar data={calendar} />
+        <Calendar data={calendar} updated={updated} />
         <Feed commits={commits} />
       </div>
     </section>

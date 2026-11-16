@@ -1,6 +1,5 @@
 import { certItem, others, tracks } from '../data/certificates';
 import { useLightbox } from '../lib/shared';
-import Year2026 from './Year2026';
 
 export default function Certificates() {
   const open = useLightbox();
@@ -8,9 +7,8 @@ export default function Certificates() {
     <section id="certificates" className="sec">
       <div className="sec-head">
         <h2>Certificates</h2>
-        <p className="intro">I finished five machine learning courses while building VoteX. Click any certificate to see it full size or verify it on Coursera.</p>
+        <p className="intro">I finished five machine learning courses between March and August 2026, while building VoteX. Click any certificate to see it full size or verify it on Coursera.</p>
       </div>
-      <Year2026 />
       <div className="tracks">
         {tracks.map(tr => (
           <div className="track" key={tr.name}>
