@@ -98,7 +98,7 @@ export default function Liwanag() {
             <ul>
               <li><b>The city map</b>, from barangay down to a single light pole</li>
               <li><b>The analytics dashboard</b>: coverage over time, status breakdown and the streets to fix first</li>
-              <li><b>Live device status</b> for every sensor, from real readings</li>
+              <li><b>Device status</b> for each sensor unit, fetched from our backend</li>
               <li><b>The admin panel</b> that ties it together</li>
             </ul>
           </div>
@@ -115,8 +115,8 @@ export default function Liwanag() {
         </div>
       </Chapter>
 
-      <Chapter id="numbers" n={4} of={of} title="Real sensors, live readings">
-        <p className="lede" style={{ marginTop: 18, maxWidth: '62ch' }}>The readings come from real ESP32 light sensors. I connected the dashboard to our backend API, so what officials see is what the street is measuring.</p>
+      <Chapter id="numbers" n={4} of={of} title="A real sensor, a city-sized demo">
+        <p className="lede" style={{ marginTop: 18, maxWidth: '62ch' }}>We built a working ESP32 sensor unit and field-tested it on a short stretch of street: it picked up the streetlights, and its readings made it all the way to the dashboard. To show what LIWANAG could do across the whole city, the dashboard runs on demo data for the hackathon.</p>
         <SensorUnit />
         <ol className="flow wide" aria-label="How a light reading reaches the dashboard">
           {FLOW.map(f => (
@@ -127,8 +127,8 @@ export default function Liwanag() {
             </li>
           ))}
         </ol>
-        <p className="lede" style={{ marginTop: 40, maxWidth: '62ch' }}>Light on the ground is measured in lux. In the demo data, streets averaged 5.43 lux, about a quarter of the 20 lux standard the dashboard checks against.</p>
-        <div className="lux wide" role="img" aria-label="Lux scale from 0 to 30. Average street reading 5.43 lux; standard 20 lux.">
+        <p className="lede" style={{ marginTop: 40, maxWidth: '62ch' }}>Light on the ground is measured in lux. In our demo dataset, streets averaged 5.43 lux, about a quarter of the 20 lux standard the dashboard checks against.</p>
+        <div className="lux wide" role="img" aria-label="Lux scale from 0 to 30. Demo dataset average 5.43 lux; standard 20 lux.">
           <div className="lux-track">
             <div className="lux-mark" style={{ left: '18.1%' }}><b>5.43 lux</b> average</div>
             <div className="lux-mark" style={{ left: '66.7%' }}><b>20 lux</b> standard</div>
@@ -137,19 +137,22 @@ export default function Liwanag() {
         </div>
         <div className="cols">
           <div className="text">
+            <p className="label">Demo dataset, not a real survey</p>
             <div className="stats stack">
               <div><b>36.1%</b><span>of streets meet the standard</span></div>
-              <div><b>65.77 km</b><span>of road surveyed</span></div>
+              <div><b>65.77 km</b><span>of road in the demo city map</span></div>
             </div>
             <Deep topic="data"><ul>
               <li><b>Source:</b> a battery-powered ESP32 sensor unit with a light sensor and GPS, so each reading has a location.</li>
+              <li><b>Field test:</b> we carried the unit along a short stretch of street to confirm it measured the streetlights and that the readings reached our system.</li>
+              <li><b>Demo data:</b> the city-wide figures are sample data, built to show how the dashboard works at full scale.</li>
               <li><b>Path:</b> sensors report to our backend; the React dashboard fetches the readings from its API.</li>
               <li><b>Device status</b> for each sensor is shown next to the analytics, so a broken sensor isn't mistaken for a dark street.</li>
             </ul></Deep>
           </div>
           <figure>
             <div className="frame"><AutoVideo name="dashboard-and-analytics" label="LIWANAG analytics dashboard" /></div>
-            <figcaption className="cap">The dashboard I built: coverage over time, a status breakdown, and the streets that need attention first.</figcaption>
+            <figcaption className="cap">The dashboard I built, shown with demo data: coverage over time, a status breakdown, and the streets that need attention first.</figcaption>
           </figure>
         </div>
       </Chapter>

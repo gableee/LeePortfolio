@@ -1,18 +1,15 @@
-import { useEffect, useState } from 'react';
+import { useEffect } from 'react';
 import { Link } from 'react-router-dom';
-import { DepthContext, store } from '../lib/shared';
 import { profile } from '../data/profile';
 import AutoVideo from './AutoVideo';
 import Footer from './Footer';
 import Nav from './Nav';
 
-// Frame for a project story page: nav with reading progress, hero, facts, depth switch, footer.
+// Frame for a project story page: nav with reading progress, hero, facts, footer.
 export function StoryPage({ title, lede, heroVideo, facts, readTime, links, footer, children }) {
-  const [depth, setDepth] = useState(() => store.get('depth') === '1');
-  const flip = () => { const on = !depth; setDepth(on); store.set('depth', on ? '1' : '0'); };
   useEffect(() => { document.title = `${title} · ${profile.name}`; }, [title]);
   return (
-    <DepthContext.Provider value={depth}>
+    <>
       <a className="skip" href="#main">Skip to content</a>
       <Nav links={links} progress />
       <main className="wrap" id="main">
@@ -30,13 +27,12 @@ export function StoryPage({ title, lede, heroVideo, facts, readTime, links, foot
           </dl>
           <div className="toolbar">
             <span className="label">{readTime}</span>
-            <button className="switch" role="switch" aria-checked={depth} onClick={flip}><i />Show technical detail</button>
           </div>
         </header>
         {children}
       </main>
       <Footer title={footer.title} text={footer.text} />
-    </DepthContext.Provider>
+    </>
   );
 }
 

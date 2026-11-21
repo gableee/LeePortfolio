@@ -14,7 +14,3 @@ export const store = {
 // lightbox: open({ img, title, meta, pdf?, verify?, figure? })
 export const LightboxContext = createContext(() => {});
 export const useLightbox = () => useContext(LightboxContext);
-
-// story pages: "Show technical detail" opens every under-the-hood panel
-export const DepthContext = createContext(false);
-export const useDepth = () => useContext(DepthContext);
